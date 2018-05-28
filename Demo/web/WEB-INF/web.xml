@@ -43,6 +43,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletConfigDemo</servlet-name>
-        <url-pattern>/bbb</url-pattern>
+        <url-pattern>/bbb/*</url-pattern>
     </servlet-mapping>
 </web-app>
