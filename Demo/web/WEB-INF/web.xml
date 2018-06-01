@@ -109,4 +109,12 @@
         <servlet-name>download</servlet-name>
         <url-pattern>/download</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>redirect</servlet-name>
+        <servlet-class>com.javaee.learning.RedirectServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>redirect</servlet-name>
+        <url-pattern>/redirect</url-pattern>
+    </servlet-mapping>
 </web-app>
