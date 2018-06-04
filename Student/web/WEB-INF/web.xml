@@ -19,4 +19,28 @@
         <servlet-name>addStudent</servlet-name>
         <url-pattern>/student/add</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>deleteStudent</servlet-name>
+        <servlet-class>com.student.servlet.DeleteStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteStudent</servlet-name>
+        <url-pattern>/student/delete</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>studentDetail</servlet-name>
+        <servlet-class>com.student.servlet.StudentDetailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>studentDetail</servlet-name>
+        <url-pattern>/student/detail</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>updateStudent</servlet-name>
+        <servlet-class>com.student.servlet.updateStudentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateStudent</servlet-name>
+        <url-pattern>/student/update</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AddStudentServlet extends HttpServlet{
-
+public class updateStudentServlet extends HttpServlet {
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req,resp);
+        doPost(req, resp);
     }
 
     @Override
@@ -31,6 +31,7 @@ public class AddStudentServlet extends HttpServlet{
         response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         response.setContentType("text/html;charset=utf-8");
         try {
+            int sid = Integer.parseInt(request.getParameter("sid"));
             String sname = request.getParameter("sname");
             String gender = request.getParameter("gender");
             String phone = request.getParameter("phone");
@@ -38,18 +39,18 @@ public class AddStudentServlet extends HttpServlet{
             String hobby = request.getParameter("hobby");
             String info = request.getParameter("info");
             Date date = null;
-            if(!TextUtils.isEmpty(birthday)){
-             date = new SimpleDateFormat("yyyy-MM-dd").parse(birthday);
+            if (!TextUtils.isEmpty(birthday)) {
+                date = new SimpleDateFormat("yyyy-MM-dd").parse(birthday);
             }
-            Student student = new Student(sname,gender,phone,date,hobby,info);
+            Student student = new Student(sid, sname, gender, phone, date, hobby, info);
             StudentService service = new StudentServiceImpl();
-            service.addStudent(student);
-            System.out.println("--------新增学生成功--------");
-            BaseData<String> baseData = new BaseData<>(1,"","新增学生成功");
+            service.updateStudent(student);
+            System.out.println("--------编辑学生成功--------");
+            BaseData<String> baseData = new BaseData<>(1, "", "编辑学生成功");
             response.getWriter().write(JSON.toJSONString(baseData));
         } catch (Exception e) {
             e.printStackTrace();
-            BaseData<String> baseData = new BaseData<>(0,"",e.getMessage());
+            BaseData<String> baseData = new BaseData<>(0, "", e.getMessage());
             response.getWriter().write(JSON.toJSONString(baseData));
         }
     }

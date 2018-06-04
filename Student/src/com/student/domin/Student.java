@@ -23,6 +23,16 @@ public class Student {
         this.info = info;
     }
 
+    public Student(int sid, String sname, String gender, String phone, Date birthday, String hobby, String info) {
+        this.sid = sid;
+        this.sname = sname;
+        this.gender = gender;
+        this.phone = phone;
+        this.birthday = birthday;
+        this.hobby = hobby;
+        this.info = info;
+    }
+
     public int getSid() {
         return sid;
     }

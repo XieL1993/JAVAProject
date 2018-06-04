@@ -3,8 +3,8 @@ package com.student.utils;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class SourceFactory {
-    /*    CREATE DATABASE sutdent
-        USE sutdent
+    /*    CREATE DATABASE student
+        USE student
         CREATE TABLE student (
                 sid INT PRIMARY KEY AUTO_INCREMENT,
                 sname VARCHAR(20),
@@ -13,6 +13,7 @@ public class SourceFactory {
                 birthday DATE,
                 hobby VARCHAR(50),
                 info VARCHAR(200)
+
     )*/
     static ComboPooledDataSource dataSource = null;
     static {
