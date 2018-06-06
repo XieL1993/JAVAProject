@@ -15,7 +15,10 @@ public class SourceFactory {
                 info VARCHAR(200)
 
     )*/
+    /*CREATE TABLE t_user (uid INT PRIMARY KEY AUTO_INCREMENT , username VARCHAR(20) , PASSWORD VARCHAR(20) )*/
+//    CREATE TABLE t_token(token VARCHAR(50),expiry DATE)
     static ComboPooledDataSource dataSource = null;
+
     static {
         dataSource = new ComboPooledDataSource();
     }
