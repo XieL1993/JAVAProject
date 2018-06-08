@@ -20,8 +20,8 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String username = new String(request.getParameter("username").getBytes("ISO-8859-1"), "UTF-8");
-            String password = new String(request.getParameter("password").getBytes("ISO-8859-1"), "UTF-8");
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
             // 查询用户表
             User user = new User(username, password);
             UserService service = new UserServiceImpl();

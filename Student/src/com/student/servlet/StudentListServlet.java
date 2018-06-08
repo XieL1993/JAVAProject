@@ -22,9 +22,6 @@ public class StudentListServlet extends HttpServlet {
             String sname = request.getParameter("searchText");
             int pageSize = Integer.parseInt(request.getParameter("pageSize"));
             int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-            if (!TextUtils.isEmpty(sname)) {
-                sname = new String(sname.getBytes("ISO-8859-1"), "UTF-8");
-            }
             StudentService service = new StudentServiceImpl();
             PageBean<Student> pageBean = service.findAll(sname, pageSize, currentPage);
             BaseData<PageBean<Student>> baseData = new BaseData<>(1, pageBean, "");

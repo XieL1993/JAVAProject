@@ -1,6 +1,7 @@
-package com.student.filter;
+package com.jd.mobile.filter;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+@WebFilter(filterName = "encoding", urlPatterns = "/*")
 public class EncodingFilter implements Filter {
     private String charset = "UTF-8";
 
