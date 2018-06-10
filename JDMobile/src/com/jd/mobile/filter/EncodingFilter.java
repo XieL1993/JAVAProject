@@ -1,13 +1,15 @@
 package com.jd.mobile.filter;
 
+import com.jd.mobile.utils.TextUtils;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 @WebFilter(filterName = "encoding", urlPatterns = "/*")
 public class EncodingFilter implements Filter {
@@ -22,19 +24,14 @@ public class EncodingFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        // 解决post提交乱码问题
-        request.setCharacterEncoding(charset);
-        response.setCharacterEncoding(charset);
+        // 解决response乱码
         response.setContentType("text/html;charset=" + charset);
         // 解决跨越
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,token");
-        // 获取HttpServletRequest对象的代理对象
-        ServletRequest requestProxy = getHttpServletRequestProxy(request);
-        // 这样用户在使用request对象时实际上使用的是HttpServletRequest对象的代理对象requestProxy
-        filterChain.doFilter(requestProxy, response);
+        filterChain.doFilter(new MyRequest(request), response);
     }
 
     @Override
@@ -42,20 +39,59 @@ public class EncodingFilter implements Filter {
 
     }
 
-    private ServletRequest getHttpServletRequestProxy(final HttpServletRequest request) {
-        return (ServletRequest) Proxy.newProxyInstance(this.getClass().getClassLoader(), request.getClass().getInterfaces(), new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                if ("get".equalsIgnoreCase(request.getMethod()) && "getParameter".equals(method.getName())) {
-                    String value = (String) method.invoke(request, args);
-                    if (value == null) {
-                        return null;
-                    }
-                    return new String(value.getBytes("ISO-8859-1"), charset);
-                } else {
-                    return method.invoke(request, args);
+    public class MyRequest extends HttpServletRequestWrapper{
+        private HttpServletRequest request = null;
+        private boolean flag = true;
+        public MyRequest(HttpServletRequest request) {
+            super(request);
+            this.request = request;
+        }
+
+        @Override
+        public Map<String, String[]> getParameterMap() {
+            String method = request.getMethod();
+            if ("post".equalsIgnoreCase(method)) {
+                try {
+                    request.setCharacterEncoding(charset);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
+                return request.getParameterMap();
+            }else if("get".equalsIgnoreCase(method)){
+                Map<String, String[]> map = request.getParameterMap();
+                if(flag){
+                    for (String key :map.keySet()){
+                        String[] arr = map.get(key);
+                        for (int i = 0;i<arr.length;i++){
+                            try {
+                                arr[i] = new String(arr[i].getBytes("ISO-8859-1"),charset);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    flag =false;
+                }
+                return map;
+            }else {
+                return super.getParameterMap();
             }
-        });
+        }
+
+        @Override
+        public String[] getParameterValues(String name) {
+            if(TextUtils.isEmpty(name))return null;
+            Map<String, String[]> map = getParameterMap();
+            if(map==null||map.size()==0)return null;
+            return map.get(name);
+        }
+
+        @Override
+        public String getParameter(String name) {
+            if(TextUtils.isEmpty(name))return null;
+            String[] values = getParameterValues(name);
+            if(values==null||values.length==0)return null;
+            return values[0];
+        }
     }
 }
