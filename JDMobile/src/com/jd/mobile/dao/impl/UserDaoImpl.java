@@ -9,18 +9,24 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 
 import java.sql.SQLException;
 
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
 
     @Override
     public void register(User user) throws SQLException {
         QueryRunner runner = new QueryRunner(JDBCUtils.getDataSource());
-        runner.update("insert into user values ( ? , ? , ? ,? )",user.getUid(),user.getUsername(),user.getPassword(),user.getTime());
+        runner.update("insert into user values ( ? , ? , ? ,? )", user.getUid(), user.getUsername(), user.getPassword(), user.getTime());
     }
 
     @Override
     public User login(User user) throws SQLException {
         QueryRunner runner = new QueryRunner(JDBCUtils.getDataSource());
-        return runner.query("select * from user where username = ? and password = ? " , new BeanHandler<>(User.class),user.getUsername(),user.getPassword());
+        return runner.query("select * from user where username = ? and password = ? ", new BeanHandler<>(User.class), user.getUsername(), user.getPassword());
+    }
+
+    @Override
+    public User find(String uid) throws SQLException {
+        QueryRunner runner = new QueryRunner(JDBCUtils.getDataSource());
+        return runner.query("select * from user where uid = ? ", new BeanHandler<>(User.class), uid);
     }
 
     @Override
@@ -32,6 +38,6 @@ public class UserDaoImpl implements UserDao{
     @Override
     public Token findToken(String token) throws SQLException {
         QueryRunner runner = new QueryRunner(JDBCUtils.getDataSource());
-        return runner.query("select * from token where tid = ? " , new BeanHandler<>(Token.class),token);
+        return runner.query("select * from token where tid = ? ", new BeanHandler<>(Token.class), token);
     }
 }

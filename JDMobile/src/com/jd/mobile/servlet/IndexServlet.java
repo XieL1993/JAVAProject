@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "index",urlPatterns = "/index")
-public class IndexServlet extends HttpServlet{
+@WebServlet(name = "index", urlPatterns = "/index")
+public class IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -25,8 +25,13 @@ public class IndexServlet extends HttpServlet{
             List<Product> hots = service.findHots();
             List<Product> news = service.findNews();
             JSONObject object = new JSONObject();
-            object.put("hots",hots);
-            object.put("news",news);
+            object.put("hots", hots);
+            object.put("news", news);
+            JSONArray array = new JSONArray();
+            array.add("banner/a.jpg");
+            array.add("banner/b.jpeg");
+            array.add("banner/c.jpg");
+            object.put("banners", array);
             BaseData<JSONObject> baseData = new BaseData<>(1, object, "获取首页成功");
             response.getWriter().write(JSON.toJSONString(baseData));
         } catch (Exception e) {

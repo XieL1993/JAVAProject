@@ -19,25 +19,21 @@ import java.util.Date;
 
 @WebServlet(name = "register", urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
-    @Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req,resp);
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            User user = BeanFactory.populate(User.class,request.getParameterMap());
+            User user = BeanFactory.populate(User.class, request.getParameterMap());
             user.setUid(UUIDUtils.getUUID());
             user.setTime(new Date());
             UserService service = new UserServiceImpl();
             service.register(user);
             System.out.println("--------注册成功--------");
-            BaseData<String> baseData = new BaseData<>(1,"","注册成功");
+            BaseData<String> baseData = new BaseData<>(1, "", "注册成功");
             response.getWriter().write(JSON.toJSONString(baseData));
         } catch (SQLException e) {
             e.printStackTrace();
-            BaseData<String> baseData = new BaseData<>(0,"",e.getMessage());
+            BaseData<String> baseData = new BaseData<>(0, "", e.getMessage());
             response.getWriter().write(JSON.toJSONString(baseData));
         }
     }

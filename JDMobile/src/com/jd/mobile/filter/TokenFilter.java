@@ -14,9 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-@WebFilter(filterName = "tokenFilter",urlPatterns = "/*")
-public class TokenFilter implements Filter{
+@WebFilter(filterName = "tokenFilter", urlPatterns = "/*")
+public class TokenFilter implements Filter {
     private long expiry = 1000 * 60 * 60;// 有效期 60分钟
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -30,7 +31,9 @@ public class TokenFilter implements Filter{
         String requestURI = request.getRequestURI();
         String method = request.getMethod();
         System.out.println(token + "---" + requestURI + "---" + method);
-        if ("OPTIONS".equals(method) || "/login".equals(requestURI)||"/register".equals(requestURI)) {
+        if ("OPTIONS".equals(method)) {
+            response.setStatus(200);
+        } else if ("/login".equals(requestURI) || "/register".equals(requestURI) || "/image".equals(requestURI)) {
             filterChain.doFilter(request, response);
         } else {
             if (checkToken(token)) {
@@ -46,6 +49,7 @@ public class TokenFilter implements Filter{
     public void destroy() {
 
     }
+
     private boolean checkToken(String token) {
         if (!TextUtils.isEmpty(token)) {
             try {

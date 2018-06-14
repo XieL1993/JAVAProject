@@ -22,6 +22,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User find(String uid) throws SQLException {
+        UserDao dao = new UserDaoImpl();
+        return dao.find(uid);
+    }
+
+    @Override
     public void addToken(Token token) throws SQLException {
         UserDao dao = new UserDaoImpl();
         dao.addToken(token);

@@ -7,7 +7,7 @@ public class PageBean<T> {
     private int totalPage;//总页数
     private int pageSize;//每页的记录数
     private int totalSize; //总的记录数
-    private List<T> list;//当前页的学生集合
+    private List<T> list;//当前页的商品集合
 
     public int getCurrentPage() {
         return currentPage;

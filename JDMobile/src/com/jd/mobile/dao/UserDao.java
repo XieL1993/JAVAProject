@@ -11,6 +11,8 @@ public interface UserDao {
 
     User login(User user) throws SQLException;
 
+    User find(String uid) throws SQLException;
+
     void addToken(Token token) throws SQLException;
 
     Token findToken(String token) throws SQLException;
