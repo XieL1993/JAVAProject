@@ -34,6 +34,24 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public void deleteOrder(Order order) throws Exception {
+        try {
+            JDBCUtils.startTransaction();
+            List<OrderItem> list = order.getList();
+            for (OrderItem item : list) {
+                dao.deleteOrderItem(item);
+            }
+            dao.deleteOrder(order);
+            JDBCUtils.commitTransaction();
+        } catch (SQLException e) {
+            JDBCUtils.rollbackTransaction();
+            throw new SQLException(e.getMessage());
+        } finally {
+            JDBCUtils.closeConnection();
+        }
+    }
+
+    @Override
     public PageBean<Order> getOrderList(User user, int pageSize, int currentPage) throws SQLException {
         PageBean<Order> pageBean = new PageBean<>();
         pageBean.setPageSize(pageSize);
@@ -49,5 +67,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order getOrderDetail(String oid) throws SQLException {
         return dao.getOrderDetail(oid);
+    }
+
+    @Override
+    public void updateOrder(Order order) throws SQLException {
+        dao.updateOrder(order);
     }
 }

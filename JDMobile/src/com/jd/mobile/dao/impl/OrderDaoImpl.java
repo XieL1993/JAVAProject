@@ -28,9 +28,21 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public void deleteOrder(Order order) throws SQLException {
+        QueryRunner runner = new QueryRunner();
+        runner.update(JDBCUtils.getConnection(), "delete from orders where oid = ? ", order.getOid());
+    }
+
+    @Override
     public void saveOrderItem(OrderItem item) throws SQLException {
         QueryRunner runner = new QueryRunner();
         runner.update(JDBCUtils.getConnection(), "insert into orderitem values (?,?,?,?,?)", item.getItemid(), item.getQuantity(), item.getTotal(), item.getProduct().getPid(), item.getOid());
+    }
+
+    @Override
+    public void deleteOrderItem(OrderItem item) throws SQLException {
+        QueryRunner runner = new QueryRunner();
+        runner.update(JDBCUtils.getConnection(), "delete from orderitem where itemid = ? ", item.getItemid());
     }
 
     @Override
@@ -74,5 +86,12 @@ public class OrderDaoImpl implements OrderDao {
             order.getList().add(orderItem);
         }
         return order;
+    }
+
+    @Override
+    public void updateOrder(Order order) throws SQLException {
+        String sql = "update orders set state = ? , address = ? , name = ? ,telephone = ? where oid = ? ";
+        QueryRunner runner = new QueryRunner(JDBCUtils.getDataSource());
+        runner.update(sql, order.getState(), order.getAddress(), order.getName(), order.getTelephone(), order.getOid());
     }
 }

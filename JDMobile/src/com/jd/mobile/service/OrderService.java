@@ -9,7 +9,11 @@ import java.sql.SQLException;
 public interface OrderService {
     void saveOrder(Order order) throws Exception;
 
+    void deleteOrder(Order order) throws Exception;
+
     PageBean<Order> getOrderList(User user, int pageSize, int currentPage) throws SQLException;
 
     Order getOrderDetail(String oid) throws SQLException;
+
+    void updateOrder(Order order) throws SQLException;
 }

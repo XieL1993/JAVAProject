@@ -22,13 +22,17 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet(name = "order", urlPatterns = {"/order/add", "/order", "/order/detail"})
+@WebServlet(name = "order", urlPatterns = {"/order/add", "/order", "/order/detail", "/order/pay", "/order/delete"})
 public class OrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String requestURI = request.getRequestURI();
         if (TextUtils.equals(requestURI, "/order/add")) {
             addOrder(request, response);
+        } else if (TextUtils.equals(requestURI, "/order/pay")) {
+            pay(request, response);
+        } else if (TextUtils.equals(requestURI, "/order/delete")) {
+            delete(request, response);
         } else {
             response.setStatus(404);
         }
@@ -44,19 +48,6 @@ public class OrderServlet extends HttpServlet {
         } else {
             response.setStatus(404);
         }
-    }
-
-    private void getOrderDetail(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            String oid = request.getParameter("oid");
-            OrderService service = new OrderServiceImpl();
-            Order orderDetail = service.getOrderDetail(oid);
-            ResponseResult.success(response, orderDetail, "获取订单详情成功");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            ResponseResult.error(response, e);
-        }
-
     }
 
     private void getOrderList(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -127,6 +118,60 @@ public class OrderServlet extends HttpServlet {
             e.printStackTrace();
             BaseData<String> baseData = new BaseData<>(0, "", e.getMessage());
             response.getWriter().write(JSON.toJSONString(baseData));
+        }
+    }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String oid = request.getParameter("oid");
+            OrderService service = new OrderServiceImpl();
+            Order order = service.getOrderDetail(oid);
+            if (order == null) {
+                ResponseResult.error(response, new Exception("订单不存在"));
+            } else {
+                service.deleteOrder(order);
+                ResponseResult.success(response, "", "删除成功");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ResponseResult.error(response, e);
+        }
+    }
+
+    private void getOrderDetail(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String oid = request.getParameter("oid");
+            OrderService service = new OrderServiceImpl();
+            Order orderDetail = service.getOrderDetail(oid);
+            ResponseResult.success(response, orderDetail, "获取订单详情成功");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ResponseResult.error(response, e);
+        }
+
+    }
+
+    private void pay(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String oid = request.getParameter("oid");
+            String address = request.getParameter("address");
+            String name = request.getParameter("name");
+            String telephone = request.getParameter("telephone");
+            OrderService service = new OrderServiceImpl();
+            Order order = service.getOrderDetail(oid);
+            if (oid == null) {
+                ResponseResult.error(response, new Exception("订单不存在"));
+            } else {
+                order.setAddress(address);
+                order.setName(name);
+                order.setTelephone(telephone);
+                order.setState(2);
+                service.updateOrder(order);
+                ResponseResult.success(response, "", "支付成功");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ResponseResult.error(response, e);
         }
     }
 }
