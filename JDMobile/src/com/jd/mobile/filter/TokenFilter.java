@@ -33,7 +33,7 @@ public class TokenFilter implements Filter {
         System.out.println(token + "---" + requestURI + "---" + method);
         if ("OPTIONS".equals(method)) {
             response.setStatus(200);
-        } else if ("/login".equals(requestURI) || "/register".equals(requestURI) || "/image".equals(requestURI)) {
+        } else if ("/login".equals(requestURI) || "/register".equals(requestURI) || "/image".equals(requestURI)||TextUtils.equals("/attach/add",requestURI)) {
             filterChain.doFilter(request, response);
         } else {
             if (checkToken(token)) {

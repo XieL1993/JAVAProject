@@ -14,4 +14,6 @@ public interface ProductService {
     Product getProductDetail(String pid) throws Exception;
 
     PageBean<Product> getProduct(String cid, int pageSize, int currentPage) throws SQLException;
+
+    void addProduct(Product product) throws SQLException;
 }

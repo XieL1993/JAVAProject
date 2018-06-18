@@ -17,4 +17,6 @@ public interface ProductDao {
 
     List<Product> getProduct(String cid, int pageSize, int currentPage) throws SQLException;
 
+    void addProduct(Product product) throws SQLException;
+
 }

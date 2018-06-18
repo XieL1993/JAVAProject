@@ -40,4 +40,9 @@ public class ProductServiceImpl implements ProductService {
         pageBean.setList(products);
         return pageBean;
     }
+
+    @Override
+    public void addProduct(Product product) throws SQLException {
+        dao.addProduct(product);
+    }
 }

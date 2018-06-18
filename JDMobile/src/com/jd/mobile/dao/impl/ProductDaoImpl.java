@@ -61,4 +61,12 @@ public class ProductDaoImpl implements ProductDao {
         }
         return runner.query(sql, new BeanListHandler<>(Product.class), list.toArray());
     }
+
+    @Override
+    public void addProduct(Product product) throws SQLException {
+        String sql="INSERT INTO product VALUES(?,?,?,?,?,?,?,?,?,?)";
+        QueryRunner qr=new QueryRunner(JDBCUtils.getDataSource());
+        Object[] params={product.getPid(),product.getPname(),product.getMarket_price(),product.getShop_price(),product.getPimage(),product.getPdate(),product.getIs_hot(),product.getPdesc(),product.getPflag(),product.getCid()};
+        qr.update(sql,params);
+    }
 }
