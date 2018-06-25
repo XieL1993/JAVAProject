@@ -38,5 +38,7 @@
         <mapping resource="com/javaee/learning/dao02/Linkman.hbm.xml"></mapping>
         <mapping resource="com/javaee/learning/dao03/Student.hbm.xml"></mapping>
         <mapping resource="com/javaee/learning/dao03/Course.hbm.xml"></mapping>
+        <mapping resource="com/javaee/learning/day04/Category.hbm.xml"></mapping>
+        <mapping resource="com/javaee/learning/day04/Product.hbm.xml"></mapping>
     </session-factory>
 </hibernate-configuration>
