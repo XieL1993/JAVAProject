@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaee.learning.day01.mapper.UserMapper">
+    <insert id="insertUser" parameterType="user">
+        <selectKey keyProperty="uid" resultType="Integer" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO USER (username,age) VALUES (#{username},#{age})
+    </insert>
+    <select id="findUserById" parameterType="Integer" resultType="user">
+        SELECT * from user where uid = #{uid}
+    </select>
+    <select id="findAll" resultType="user">
+        SELECT * from user
+    </select>
+    <update id="updateName" parameterType="user">
+        UPDATE user set username = #{username} where uid = #{uid}
+    </update>
+    <delete id="deleteUser" parameterType="Integer">
+        delete from user where uid = #{uid}
+    </delete>
+    <select id="getUserByName" parameterType="String" resultType="user">
+        <!--select * from user where username like "%"#{name}"%" -->
+        select * from user where username like "%${value}%"
+    </select>
+</mapper>

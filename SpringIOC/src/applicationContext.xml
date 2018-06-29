@@ -1,0 +1,14 @@
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean name="UserDao" class="com.javaee.learning.dao.impl.UserDaoImpl" init-method="created" destroy-method="destroyed">
+        <property name="name" value="郑爽"></property>
+    </bean>
+    <bean name="Company" class="com.javaee.learning.dao.Company">
+        <property name="name" value="华谊"></property>
+        <property name="userDao" ref="UserDao"></property>
+    </bean>
+</beans>

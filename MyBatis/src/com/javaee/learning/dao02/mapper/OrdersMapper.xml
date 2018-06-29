@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaee.learning.dao02.mapper.OrdersMapper">
+    <sql id="select">
+        select * from orders
+    </sql>
+    <insert id="insertOrder" parameterType="orders">
+      INSERT into orders VALUES (NULL ,#{product},#{price},#{user.uid})
+    </insert>
+    <resultMap id="orderMap" type="orders">
+        <id property="oid" column="oid"></id>
+        <result property="product" column="product"></result>
+        <result property="price" column="price"></result>
+        <association property="user" javaType="User">
+            <id property="uid" column="uid"></id>
+            <result property="userName" column="user_name"></result>
+        </association>
+    </resultMap>
+    <select id="findAll" resultMap="orderMap">
+        select o.oid,o.product,o.price,o.uid,u.user_name from orders o left JOIN user u
+        on o.uid = u.uid
+    </select>
+</mapper>
