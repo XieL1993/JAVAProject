@@ -1,5 +1,6 @@
 <beans
         xmlns="http://www.springframework.org/schema/beans"
+        xmlns:p="http://www.springframework.org/schema/p"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="
         http://www.springframework.org/schema/beans
@@ -7,8 +8,17 @@
     <bean name="UserDao" class="com.javaee.learning.dao.impl.UserDaoImpl" init-method="created" destroy-method="destroyed">
         <property name="name" value="郑爽"></property>
     </bean>
+    <bean name="userDao" class="com.javaee.learning.dao.impl.UserDaoImpl" p:name="杨幂"></bean>
+    <bean name="user" class="com.javaee.learning.dao.impl.UserDaoImpl">
+        <property name="name" value="#{'唐嫣'}"></property>
+    </bean>
     <bean name="Company" class="com.javaee.learning.dao.Company">
         <property name="name" value="华谊"></property>
         <property name="userDao" ref="UserDao"></property>
+    </bean>
+    <bean name="company" class="com.javaee.learning.dao.Company" p:name="刘亦菲" p:userDao-ref="userDao"></bean>
+    <bean name="company2" class="com.javaee.learning.dao.Company">
+        <property name="name" value="#{'鞠婧祎'}"></property>
+        <property name="userDao" value="#{UserDao}"></property>
     </bean>
 </beans>

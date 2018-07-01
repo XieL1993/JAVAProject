@@ -1,0 +1,43 @@
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean name="course" class="com.javaee.learning.dao.Course">
+        <property name="array">
+            <array>
+                <value>语文</value>
+                <value>数学</value>
+                <value>英语</value>
+            </array>
+        </property>
+        <property name="list">
+            <list>
+                <value>舞蹈</value>
+                <value>唱歌</value>
+            </list>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="age" value="18"></entry>
+                <entry key="sex" value="女"></entry>
+            </map>
+        </property>
+    </bean>
+    <bean name="role" class="com.javaee.learning.dao.Role">
+        <property name="name" value="楚雨荨"></property>
+    </bean>
+    <bean name="role2" class="com.javaee.learning.dao.Role">
+        <property name="name" value="微微"></property>
+    </bean>
+    <bean name="person" class="com.javaee.learning.dao.Person">
+        <property name="name" value="郑爽"></property>
+        <property name="roles">
+            <list>
+                <ref bean="role"></ref>
+                <ref bean="role2"></ref>
+            </list>
+        </property>
+    </bean>
+</beans>
