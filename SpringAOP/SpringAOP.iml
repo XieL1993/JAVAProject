@@ -41,6 +41,15 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/spring-aop-4.2.4.RELEASE.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
           <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/spring-beans-4.2.4.RELEASE.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -77,6 +86,42 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/com.springsource.org.aopalliance-1.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/com.springsource.org.aspectj.weaver-1.6.8.RELEASE.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/spring-aspects-4.2.4.RELEASE.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/spring-test-4.2.4.RELEASE.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
           <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/junit.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -87,15 +132,6 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/org.hamcrest.core_1.3.0.v201303031735.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/spring-aop-4.2.4.RELEASE.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <context:component-scan base-package="com.javaee.learning.Test1"></context:component-scan>
+    <bean id="myAspect" class="com.javaee.learning.Test1.MyAspectXML"></bean>
+    <aop:config>
+        <aop:pointcut id="point1"
+                      expression="execution(* com.javaee.learning.Test1.ProductDaoImpl.save(..)) and args(name)"></aop:pointcut>
+        <aop:pointcut id="point2"
+                      expression="execution(* com.javaee.learning.Test1.ProductDaoImpl.delete(..))"></aop:pointcut>
+        <aop:pointcut id="point3"
+                      expression="execution(* com.javaee.learning.Test1.ProductDaoImpl.update(..))"></aop:pointcut>
+        <aop:pointcut id="point4"
+                      expression="execution(* com.javaee.learning.Test1.ProductDaoImpl.find(..))"></aop:pointcut>
+        <aop:aspect ref="myAspect">
+            <aop:before method="check" pointcut-ref="point1" arg-names="name"></aop:before>
+            <aop:after-returning method="writeLog" pointcut-ref="point2" returning="result"></aop:after-returning>
+            <aop:around method="arround" pointcut-ref="point3"></aop:around>
+            <aop:after-throwing method="error" pointcut-ref="point4" throwing="e"></aop:after-throwing>
+            <aop:after method="finalMethod" pointcut-ref="point4"></aop:after>
+        </aop:aspect>
+    </aop:config>
+</beans>
