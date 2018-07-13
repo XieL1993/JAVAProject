@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaee.learning.demo2.mapper.StudentMapper">
+    <resultMap id="studentMap" type="Student">
+        <id property="sid" column="sid"></id>
+        <result property="sname" column="sname"></result>
+        <result property="age" column="age"></result>
+        <result property="birthday" column="birthday"/>
+    </resultMap>
+    <select id="findAll" resultMap="studentMap">
+        select * from student
+    </select>
+    <insert id="addStudent" parameterType="Student">
+        INSERT into student VALUES (null,#{sname},#{age},#{birthday})
+</insert>
+</mapper>

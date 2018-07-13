@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaee.learning.demo2.mapper.OrderMapper">
+    <resultMap id="orderMap" type="orders">
+        <id property="oid" column="oid"></id>
+        <result property="product" column="product"></result>
+        <result property="price" column="price"></result>
+        <result property="uid" column="uid"/>
+    </resultMap>
+    <select id="findAll" resultMap="orderMap">
+        select * from orders
+    </select>
+    <select id="findById" resultMap="orderMap">
+        select * from orders where oid = #{oid}
+    </select>
+    <update id="updateOrder" parameterType="Orders">
+        UPDATE orders set product = #{product},price = #{price} where oid = #{oid}
+</update>
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaee.learning.demo2.mapper.ActorMapper">
+    <resultMap id="actorMap" type="Actor">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="image" column="image"></result>
+    </resultMap>
+    <select id="findAll" resultMap="actorMap">
+        select * from actor
+    </select>
+    <insert id="addActor" parameterType="Actor">
+        INSERT into actor VALUES (null,#{name},#{image})
+</insert>
+</mapper>
