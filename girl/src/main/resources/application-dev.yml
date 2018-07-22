@@ -1,0 +1,5 @@
+server:
+  port: 8001
+girl:
+  name: 郑爽
+  age: 18

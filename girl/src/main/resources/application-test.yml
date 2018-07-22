@@ -1,0 +1,5 @@
+server:
+  port: 8002
+girl:
+  name: 唐嫣
+  age: 20
