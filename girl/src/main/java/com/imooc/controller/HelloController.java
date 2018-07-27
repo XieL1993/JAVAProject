@@ -1,5 +1,6 @@
-package com.imooc;
+package com.imooc.controller;
 
+import com.imooc.properties.GirlProperties;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

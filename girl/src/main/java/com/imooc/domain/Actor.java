@@ -1,17 +1,20 @@
-package com.imooc;
+package com.imooc.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.validation.constraints.Min;
 
 @Entity
-public class Girls {
+public class Actor {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Integer id;
-    @Column(name = "name",length = 12)
     private String name;
+    @Min(value = 18, message = "未成年少女禁止入内！")
     private Integer age;
 
-    public Girls() {
+    public Actor() {
     }
 
     public Integer getId() {
@@ -40,7 +43,7 @@ public class Girls {
 
     @Override
     public String toString() {
-        return "Girls{" +
+        return "Actor{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +

@@ -1,5 +1,6 @@
-package com.imooc;
+package com.imooc.repository;
 
+import com.imooc.domain.Girls;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
