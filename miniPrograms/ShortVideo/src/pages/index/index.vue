@@ -1,7 +1,6 @@
 <template>
   <div class="index">
-    <div class="text">{{msg}}</div>
-
+    <a href="/pages/login/main">登录</a>
   </div>
 </template>
 
@@ -9,19 +8,21 @@
   import { getActorList } from '../../api'
 
   export default {
-    mounted () {
+    onShow () {
       this.getActor()
     },
     data () {
       return {
-        msg: '我是首页',
-        actor: []
       }
     },
     methods: {
       async getActor () {
-        this.actor = await getActorList()
-        console.log(this.actor)
+        try {
+          const res = await getActorList()
+          console.log(res)
+        } catch (e) {
+        }
+        console.log(111)
       }
     }
   }

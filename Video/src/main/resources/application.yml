@@ -1,7 +1,8 @@
-
 spring:
   profiles:
     active: dev
+  messages:
+    encoding: utf-8
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/video?useUnicode=true&characterEncoding=utf8&useSSL=false
@@ -18,10 +19,11 @@ spring:
       connection-timeout: 30000
       connection-test-query: SELECT 1
 mybatis-plus:
-  # Èç¹ûÊÇ·ÅÔÚsrc/main/javaÄ¿Â¼ÏÂ classpath:/com/yourpackage/*/mapper/*Mapper.xml
-  # Èç¹ûÊÇ·ÅÔÚresourceÄ¿Â¼ classpath:/mapper/*Mapper.xml
   mapper-locations: classpath:/mapper/*Mapper.xml
   type-aliases-package: com.hundsun.video.entity
+  global-config:
+      #é©¼å³°ä¸‹åˆ’çº¿è½¬æ¢
+      db-column-underline: true
 logging:
   level:
     com.hundsun.video.mapper : debug

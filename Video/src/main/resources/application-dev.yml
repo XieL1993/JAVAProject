@@ -1,2 +1,5 @@
 server:
-  port: 8335
+  port: 8001
+wx:
+  app-id: wxad7e431acd40876c
+  app-secret: 92b33cf7a8cb94c58dc5a6daba41473a

@@ -1,5 +1,5 @@
-import http from './http'
+import fetch from './httpFetch'
 
 export function getActorList () {
-  return http.get('actor/list')
+  return fetch.get('vUser/test')
 }

@@ -2,6 +2,8 @@ package com.hundsun.video.utils;
 
 
 import com.hundsun.video.entity.Result;
+import com.hundsun.video.enums.ResultEnums;
+import com.hundsun.video.exception.VException;
 
 public class ResultUtils {
     public static Result success(Object object) {
@@ -22,5 +24,12 @@ public class ResultUtils {
         result.setMsg(msg);
         result.setData(null);
         return result;
+    }
+
+    public static Result error(ResultEnums enums) {
+        return error(enums.getCode(), enums.getMsg());
+    }
+    public static Result error(VException e) {
+        return error(e.getCode(), e.getMessage());
     }
 }

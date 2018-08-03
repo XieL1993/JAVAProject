@@ -19,7 +19,7 @@ public class MpGenerator {
     private static final String PASSWORD = "123";
 
     public static void main(String[] args) {
-        generateByTables("actor");
+        generateByTables("bgm");
     }
 
     /**
@@ -47,8 +47,8 @@ public class MpGenerator {
         strategyConfig
                 .setCapitalMode(true)
                 .setEntityLombokModel(false)
-                .setDbColumnUnderline(true)
-                .setNaming(NamingStrategy.underline_to_camel)
+                .setDbColumnUnderline(true)// 表名、字段名、是否使用下划线命名（默认 false）
+                .setNaming(NamingStrategy.underline_to_camel)//从数据库表到文件的命名策略
                 .setInclude(tableNames);//修改替换成你需要的表名，多个表名传数组
         new AutoGenerator()
                 .setTemplateEngine(new FreemarkerTemplateEngine())

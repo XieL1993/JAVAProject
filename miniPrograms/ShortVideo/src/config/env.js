@@ -1,1 +1,5 @@
-export const baseUrl = 'https://02da835a.ngrok.io/'
+export const baseUrl = 'http://192.168.242.80:8001/'
+// export const baseUrl = ' http://14c9f1cf.ngrok.io/'
+export const apiUrl = baseUrl + 'api/'
+export const AppID = 'wxad7e431acd40876c'
+export const AppSecret = '92b33cf7a8cb94c58dc5a6daba41473a'

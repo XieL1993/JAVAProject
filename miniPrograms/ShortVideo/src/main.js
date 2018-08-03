@@ -9,12 +9,16 @@ app.$mount()
 
 export default {
   config: {
-    pages: ['^pages/index/main'],
+    pages: [
+      '^pages/mine/main',
+      'pages/login/main',
+      'pages/chooseBGM/main'
+    ],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
+      navigationBarBackgroundColor: '#2672FF',
       navigationBarTitleText: '云英视频',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: '#ffffff'
     }
   }
 }
