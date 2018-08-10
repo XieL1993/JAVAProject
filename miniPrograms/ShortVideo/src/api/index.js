@@ -1,5 +1,5 @@
 import fetch from './httpFetch'
 
-export function getActorList () {
-  return fetch.get('vUser/test')
+export function getVideoList (data) {
+  return fetch.get('video/list', data)
 }

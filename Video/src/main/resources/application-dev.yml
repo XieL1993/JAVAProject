@@ -1,5 +1,9 @@
 server:
-  port: 8001
+  port: 8003
 wx:
   app-id: wxad7e431acd40876c
   app-secret: 92b33cf7a8cb94c58dc5a6daba41473a
+attach:
+  root: D:/video/
+  bgm: bgm
+  upload: attach

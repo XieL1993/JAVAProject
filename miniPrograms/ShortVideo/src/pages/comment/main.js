@@ -1,12 +1,11 @@
 import Vue from 'vue'
-import index from './index'
+import comment from './comment.vue'
 
-const app = new Vue(index)
+const app = new Vue(comment)
 app.$mount()
-
 export default {
   config: {
     enablePullDownRefresh: true,
-    onReachBottomDistance: 50
+    onReachBottomDistance: 60
   }
 }

@@ -1,0 +1,23 @@
+@mixin text-single {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap
+}
+
+@mixin text-ellipsis($line) {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+}
+
+@mixin fullScreen($position:fixed,$z-index:1) {
+  position: $position;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: $z-index;
+}

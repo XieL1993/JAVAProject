@@ -19,7 +19,7 @@ public class MpGenerator {
     private static final String PASSWORD = "123";
 
     public static void main(String[] args) {
-        generateByTables("bgm");
+        generateByTables("comments");
     }
 
     /**
@@ -46,7 +46,7 @@ public class MpGenerator {
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig
                 .setCapitalMode(true)
-                .setEntityLombokModel(false)
+                .setEntityLombokModel(true)
                 .setDbColumnUnderline(true)// 表名、字段名、是否使用下划线命名（默认 false）
                 .setNaming(NamingStrategy.underline_to_camel)//从数据库表到文件的命名策略
                 .setInclude(tableNames);//修改替换成你需要的表名，多个表名传数组

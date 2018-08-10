@@ -31,4 +31,5 @@ public class BgmController {
         return ResultUtils.success(service.selectList(new EntityWrapper<>()));
     }
 
+
 }

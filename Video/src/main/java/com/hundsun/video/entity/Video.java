@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 用户表
+ * 视频信息表
  * </p>
  *
  * @author xl
@@ -19,7 +19,7 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-public class VUser extends Model<VUser> {
+public class Video extends Model<Video> {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,64 +27,61 @@ public class VUser extends Model<VUser> {
     private Integer id;
 
     /**
-     * 用户名称
+     * 发布者id
      */
-    private String username;
+    private Integer userId;
 
     /**
-     * 用户密码
+     * 用户使用音频的信息
      */
-    private String password;
+    private Integer audioId;
 
     /**
-     * 性别：0 未知， 1男， 1 女
+     * 视频描述
      */
-    private Integer gender;
+    private String videoDesc;
 
     /**
-     * 最近一次登录时间
+     * 视频存放的路径
      */
-    private Date lastLoginTime;
+    private String videoPath;
 
     /**
-     * 最近一次登录IP地址
+     * 视频秒数
      */
-    private String lastLoginIp;
+    private Float videoSeconds;
 
     /**
-     * 用户昵称或网络名称
+     * 视频宽度
      */
-    private String nickname;
+    private Integer videoWidth;
 
     /**
-     * 用户头像图片
+     * 视频高度
      */
-    private String avatar;
+    private Integer videoHeight;
 
     /**
-     * country
+     * 视频封面图
      */
-    private String country;
+    private String coverPath;
 
     /**
-     * province
+     * 喜欢/赞美的数量
      */
-    private String province;
+    private Long likeCounts;
 
     /**
-     * city
+     * 视频状态：
+     * 1、发布成功
+     * 2、禁止播放，管理员操作
      */
-    private String city;
-
-    /**
-     * 微信登录openid
-     */
-    private String weixinOpenid;
+    private Integer status;
 
     /**
      * 创建时间
      */
-    private Date addTime;
+    private Date createTime;
 
 
     @Override

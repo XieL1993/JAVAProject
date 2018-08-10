@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hundsun.video.mapper.CommentsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hundsun.video.entity.Comments">
+        <id column="id" property="id"/>
+        <result column="father_comment_id" property="fatherCommentId"/>
+        <result column="to_user_id" property="toUserId"/>
+        <result column="video_id" property="videoId"/>
+        <result column="from_user_id" property="fromUserId"/>
+        <result column="comment" property="comment"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <resultMap id="CommentsUserMap" type="com.hundsun.video.entity.vo.CommentsVo">
+        <id column="id" property="id"/>
+        <result column="father_comment_id" property="fatherCommentId"/>
+        <result column="to_user_id" property="toUserId"/>
+        <result column="video_id" property="videoId"/>
+        <result column="from_user_id" property="fromUserId"/>
+        <result column="comment" property="comment"/>
+        <result column="create_time" property="createTime"/>
+        <result column="to_user_name" property="toUserName"/>
+        <result column="to_user_avatar" property="toUserAvatar"/>
+        <result column="from_user_name" property="fromUserName"/>
+        <result column="from_user_avatar" property="fromUserAvatar"/>
+    </resultMap>
+    <select id="queryComments" resultMap="CommentsUserMap" parameterType="String">
+        SELECT c.*,
+        u1.nickname AS from_user_name,u1.avatar AS from_user_avatar,
+        u2.nickname AS to_user_name,u2.avatar AS to_user_avatar
+        FROM comments c
+        LEFT JOIN v_user u1 ON c.from_user_id = u1.id
+        LEFT JOIN v_user u2 ON c.to_user_id = u2.id
+        where c.video_id = #{videoId} order by c.create_time desc
+    </select>
+</mapper>

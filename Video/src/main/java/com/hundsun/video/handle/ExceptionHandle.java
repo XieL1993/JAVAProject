@@ -22,7 +22,7 @@ public class ExceptionHandle {
             return ResultUtils.error(girlException.getCode(), girlException.getMessage());
         } else {
             logger.error("[系统异常]{]", e);
-            return ResultUtils.error(ResultEnums.UNKONW_ERROR);
+            return ResultUtils.error(ResultEnums.UNKONW_ERROR.getCode(),e.getMessage());
         }
     }
 }

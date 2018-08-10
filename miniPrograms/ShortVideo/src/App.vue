@@ -1,12 +1,15 @@
 <script>
-export default {
-}
+  export default {}
 </script>
 
 <style>
-/*@import "../static/weui.css";*/
-::-webkit-scrollbar {
-  display: none;
-}
+  page {
+    line-height: 1.6;
+    height: 100%;
+    font-family: -apple-system-font, Helvetica Neue, sans-serif
+  }
 
+  ::-webkit-scrollbar {
+    display: none;
+  }
 </style>

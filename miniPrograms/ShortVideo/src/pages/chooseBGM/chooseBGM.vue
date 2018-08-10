@@ -42,27 +42,29 @@
           this.bgmList.map(item => {
             item.path = baseUrl + item.path
           })
+          console.log(this.bgmList)
         } catch (e) {
           console.log(e)
         }
       },
       upload (e) {
-        console.log(e)
         const bgmId = e.mp.detail.value.bgmId
         const desc = e.mp.detail.value.desc
         const userInfo = wx.getStorageSync('userInfo')
-        var videoSeconds = this.videoParams.videoSeconds
-        var videoHeight = this.videoParams.videoHeight
-        var videoWidth = this.videoParams.videoWidth
-        var videoPath = this.videoParams.videoPath
-
-        wx.uploadFile({
+        const videoSeconds = this.videoParams.videoSeconds
+        const videoHeight = this.videoParams.videoHeight
+        const videoWidth = this.videoParams.videoWidth
+        const videoPath = this.videoParams.videoPath
+        wx.showLoading({
+          title: '上传中'
+        })
+        const uploadTask = wx.uploadFile({
           url: `${apiUrl}video/upload`,
           filePath: videoPath,
           name: 'file',
           header: {
-            'content-type': 'multipart/form-data',
-            'token': userInfo.token
+            'content-type': 'application/json',
+            'token': wx.getStorageSync('token') || ''
           },
           formData: {
             userId: userInfo.id,
@@ -74,10 +76,17 @@
           },
           success: function (res) {
             console.log(res)
+            wx.hideLoading()
           },
           fail: function (e) {
             console.log(e)
+            wx.hideLoading()
           }
+        })
+        uploadTask.onProgressUpdate((res) => {
+          console.log('上传进度', res.progress)
+          console.log('已经上传的数据长度', res.totalBytesSent)
+          console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
         })
       }
     }

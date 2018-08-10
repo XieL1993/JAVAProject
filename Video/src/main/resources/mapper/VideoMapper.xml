@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hundsun.video.mapper.VideoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hundsun.video.entity.Video">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="audio_id" property="audioId"/>
+        <result column="video_desc" property="videoDesc"/>
+        <result column="video_path" property="videoPath"/>
+        <result column="video_seconds" property="videoSeconds"/>
+        <result column="video_width" property="videoWidth"/>
+        <result column="video_height" property="videoHeight"/>
+        <result column="cover_path" property="coverPath"/>
+        <result column="like_counts" property="likeCounts"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="VideoLinkUserMap" type="com.hundsun.video.entity.VideoLinkUser">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="audio_id" property="audioId"/>
+        <result column="video_desc" property="videoDesc"/>
+        <result column="video_path" property="videoPath"/>
+        <result column="video_seconds" property="videoSeconds"/>
+        <result column="video_width" property="videoWidth"/>
+        <result column="video_height" property="videoHeight"/>
+        <result column="cover_path" property="coverPath"/>
+        <result column="like_counts" property="likeCounts"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="nickname" property="nickname"/>
+        <result column="avatar" property="avatar"/>
+    </resultMap>
+    <select id="queryAllVideos" resultMap="VideoLinkUserMap" parameterType="String">
+        SELECT v.*,u.nickname AS nickname,u.avatar AS avatar FROM video v LEFT
+        JOIN v_user u on v.user_id = u.id
+        <where>
+            <if test=" videoDesc != null and videoDesc != '' ">
+                AND v.video_desc LIKE "%"#{videoDesc}"%"
+            </if>
+            <if test=" userId != null and userId != '' ">
+                AND v.user_id = #{userId}
+            </if>
+            AND v.status = 1 ORDER BY v.create_time desc
+        </where>
+    </select>
+</mapper>

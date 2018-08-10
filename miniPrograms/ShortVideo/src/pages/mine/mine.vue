@@ -42,8 +42,7 @@
             } else if (videoSeconds < 1) {
               showToast('视频长度太短，请上传超过1秒的视频')
             } else {
-              go(`/pages/chooseBGM/main?videoSeconds='${videoSeconds}&videoWidth=
-              ${videoWidth}&videoHeight=${videoHeight}&videoPath=${videoPath}`)
+              go(`/pages/chooseBGM/main?videoSeconds=${videoSeconds}&videoWidth=${videoWidth}&videoHeight=${videoHeight}&videoPath=${videoPath}`)
             }
           },
           fail: function (e) {
