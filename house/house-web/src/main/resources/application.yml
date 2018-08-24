@@ -1,0 +1,62 @@
+server:
+  port: 8081
+spring:
+  druid:
+    url: jdbc:mysql://localhost:3306/house?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123
+    driver-class-name: com.mysql.jdbc.Driver
+    #最大连接数
+    maxActive: 30
+    #最小连接数
+    minIdle: 5
+    #获取连接的最大等待时间
+    maxWait: 10000
+    #解决mysql8小时问题
+    validationQuery: SELECT 'x'
+    #空闲连接检查时间间隔
+    timeBetweenEvictionRunsMillis: 60000
+    #空闲连接最小空闲时间
+    minEvictableIdleTimeMillis: 300000
+  freemarker:
+    charset: UTF-8
+    content-type: text/html;charset=UTF-8
+    expose-request-attributes: true
+    expose-session-attributes: true
+    expose-spring-macro-helpers: true
+    suffix: .ftl
+    settings:
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      default_encoding: UTF-8
+      auto_import:  common/common.ftl as common
+  mail:
+    username: skt-faker7@qq.com
+    password: enfyzbfxgzeihige
+    host: smtp.qq.com
+    properties:
+      mail:
+        smtp:
+          auth: true
+            starttls:
+              enable: true
+              required: true
+mybatis:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  type-aliases-package: com.hundsun.house.bean
+  configuration:
+    # 关闭缓存
+    cache-enabled: true
+    # 大小写转换
+    map-underscore-to-camel-case: true
+    # 主键自增
+    use-generated-keys: true
+    # 重用预处理语句
+    default-executor-type: reuse
+    # 事务超时时间
+    default-statement-timeout: 600
+logging:
+  level:
+    com.hundsun.house.mapper: debug
+file:
+  path: D:\house\avagtar
+
