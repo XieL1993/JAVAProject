@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hundsun.house.mapper.UserMapper">
+    <sql id="houseField">
+     a.id,
+     a.type,
+     a.name,
+     a.price,
+     a.images,
+     a.area,
+     a.beds,
+     a.baths,
+     a.rating,
+     a.remarks,
+     a.properties,
+     a.floor_plan,
+     a.tags,
+     a.create_time,
+     a.city_id,
+     a.community_id,
+     a.address,
+     a.state
+    </sql>
+    <sql id="houseCondition">
+        <where>
+            state = 1
+            <if test="house.id !=null and house.id !=0">
+                and a.id = #{house.id}
+            </if>
+            <if test="house.type != null">
+                and a.type = #{house.type}
+            </if>
+            <if test="house.communityId != null">
+                and a.community_id = #{house.communityId}
+            </if>
+            <if test="house.name != null and house.name != '' ">
+                and a.name like "%"#{house.name}"%"
+            </if>
+            <if test="house.ids != null and house.ids.size() > 0 ">
+                and a.id IN
+                <foreach collection="house.ids" item="item" index="index" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+    <select id="selectPageCount" resultType="long">
+        SELECT COUNT (id) FROM house a
+        <include refid="houseCondition"/>
+    </select>
+    <select id="selectPageHouses">
+        SELECT
+        <include refid="houseField"/>
+        FROM house a
+        <include refid="houseCondition"/>
+        <choose>
+            <when test=" house.sort != null and house.sort == 'price_asc' ">
+                order by a.price ASC
+            </when>
+            <when test=" house.sort != null and house.sort == 'price_desc' ">
+                order by a.price DESC
+            </when>
+            <otherwise>
+                order by a.create_time DESC
+            </otherwise>
+        </choose>
+        <if test=" pageParams.offset != null and pageParams.limit != null ">
+            limit #{pageParams.offset},#{pageParams.limit}
+        </if>
+        <if test=" pageParams.offset == null and pageParams.limit != null ">
+            limit #{pageParams.limit}
+        </if>
+    </select>
+</mapper>

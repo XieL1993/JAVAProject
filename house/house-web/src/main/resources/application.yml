@@ -30,16 +30,18 @@ spring:
       default_encoding: UTF-8
       auto_import:  common/common.ftl as common
   mail:
-    username: skt-faker7@qq.com
-    password: enfyzbfxgzeihige
+    username: wpf.team@qq.com
+#    username: skt-faker7@qq.com
+    password: zcalyosvalznfaaa
+#    password: enfyzbfxgzeihige
     host: smtp.qq.com
-    properties:
-      mail:
-        smtp:
-          auth: true
-            starttls:
-              enable: true
-              required: true
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#            starttls:
+#              enable: true
+#              required: true
 mybatis:
   mapper-locations: classpath:/mapper/*Mapper.xml
   type-aliases-package: com.hundsun.house.bean
@@ -58,5 +60,6 @@ logging:
   level:
     com.hundsun.house.mapper: debug
 file:
-  path: D:\house\avagtar
+  path: D:\house
+  prefix: http://192.168.242.80:70/images
 
