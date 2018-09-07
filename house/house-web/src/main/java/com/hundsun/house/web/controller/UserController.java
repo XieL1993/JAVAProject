@@ -5,6 +5,7 @@ import com.hundsun.house.bean.User;
 import com.hundsun.house.bean.vo.UserVo;
 import com.hundsun.house.constants.CommonConstants;
 import com.hundsun.house.result.ResultMsg;
+import com.hundsun.house.service.AgencyService;
 import com.hundsun.house.service.UserService;
 import com.hundsun.house.utils.HashUtils;
 import com.hundsun.house.utils.UserHelper;
@@ -22,12 +23,13 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private AgencyService agencyService;
 
     @RequestMapping("/accounts/register")
     public String accountsRegister(UserVo userVo, ModelMap modelMap) {
         if (userVo == null || userVo.getName() == null) {
-//            modelMap.put()
-            modelMap.put("agencyList", Lists.newArrayList());
+            modelMap.put("agencyList", agencyService.getAllAgency());
             return "/user/accounts/register";
         }
         ResultMsg resultMsg = UserHelper.validate(userVo);

@@ -5,6 +5,8 @@ public interface MailService {
 
     boolean enable(String key);
 
+    void sendMail(String title, String content, String email);
+
     void resetNotify(String email);
 
     String getResetEmail(String key);

@@ -91,3 +91,171 @@ VALUES
 
 /*!40000 ALTER TABLE `house` ENABLE KEYS */;
 UNLOCK TABLES;
+
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `agency`;
+
+CREATE TABLE `agency` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL DEFAULT '' COMMENT '经纪机构名称',
+  `address` varchar(100) NOT NULL DEFAULT '' COMMENT '地址',
+  `phone` varchar(30) NOT NULL DEFAULT '' COMMENT '手机',
+  `email` varchar(50) NOT NULL DEFAULT '' COMMENT '电子邮件',
+  `about_us` varchar(100) NOT NULL DEFAULT '' COMMENT '描述',
+  `mobile` varchar(100) NOT NULL DEFAULT '' COMMENT '电话',
+  `web_site` varchar(20) NOT NULL DEFAULT '' COMMENT '网站',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `agency` WRITE;
+/*!40000 ALTER TABLE `agency` DISABLE KEYS */;
+
+INSERT INTO `agency` (`id`, `name`, `address`, `phone`, `email`, `about_us`, `mobile`, `web_site`)
+VALUES
+	(1,'恋家','恋家地址','010-89898989','010@gmail.com','1','1','1'),
+	(2,'交点房产','交点房产地址','010-87898989','020@gmail.com','1','1','1'),
+	(3,'唛田','唛田地址','010-88898989','030@gmail.com','1','1','1'),
+	(4,'安聚客','安聚客地址','010-81898989','040@gmail.com','1','1','1'),
+	(5,'链家房产','链家房产','12090909090','linke@163.com','链家房产','010-45674567','www.link.com');
+
+/*!40000 ALTER TABLE `agency` ENABLE KEYS */;
+UNLOCK TABLES;
+# ------------------------------------------------------------
+
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `house_user`;
+
+CREATE TABLE `house_user` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `house_id` bigint(20) NOT NULL COMMENT '房屋id',
+  `user_id` bigint(20) NOT NULL COMMENT '用户id',
+  `create_time` date NOT NULL COMMENT '创建时间',
+  `type` tinyint(1) NOT NULL COMMENT '1-售卖，2-收藏',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `house_id_user_id_type` (`house_id`,`user_id`,`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `house_user` WRITE;
+/*!40000 ALTER TABLE `house_user` DISABLE KEYS */;
+
+INSERT INTO `house_user` (`id`, `house_id`, `user_id`, `create_time`, `type`)
+VALUES
+	(1,22,7,'2017-02-26',1),
+	(11,43,7,'2017-04-28',1),
+	(13,42,7,'2017-04-28',1),
+	(17,24,7,'2017-04-29',1),
+	(18,24,14,'2017-04-29',2),
+	(19,23,7,'2017-04-29',2),
+	(22,27,7,'2017-04-29',1),
+	(23,26,7,'2017-04-29',1),
+	(27,30,7,'2017-07-23',1),
+	(28,36,7,'2017-07-23',1),
+	(29,37,7,'2017-07-23',1),
+	(30,38,7,'2017-07-23',1),
+	(31,39,7,'2017-07-23',1),
+	(33,40,7,'2017-12-31',1),
+	(34,23,7,'2017-12-31',1),
+	(35,42,7,'2018-01-06',2),
+	(39,41,7,'2017-12-31',1),
+	(90,25,7,'2017-04-29',1),
+	(91,31,7,'2017-07-23',1),
+	(92,32,7,'2017-07-23',1),
+	(93,33,7,'2017-07-23',1),
+	(94,34,7,'2017-07-23',1),
+	(95,35,7,'2017-07-23',1),
+	(96,44,7,'2018-01-06',1),
+	(97,45,7,'2018-01-06',1),
+	(101,44,38,'2018-01-06',2),
+	(102,45,7,'2018-01-06',2);
+
+/*!40000 ALTER TABLE `house_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `comment`;
+
+CREATE TABLE `comment` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `content` varchar(512) NOT NULL DEFAULT '' COMMENT '评论内容',
+  `house_id` bigint(20) NOT NULL COMMENT '房屋id',
+  `create_time` date NOT NULL COMMENT '发布时间戳',
+  `blog_id` int(11) NOT NULL COMMENT '博客id',
+  `type` tinyint(1) NOT NULL COMMENT '类型1-房产评论，2-博客评论',
+  `user_id` bigint(20) NOT NULL COMMENT '评论用户',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `comment` WRITE;
+/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+
+INSERT INTO `comment` (`id`, `content`, `house_id`, `create_time`, `blog_id`, `type`, `user_id`)
+VALUES
+	(1,'为楼主点赞',5,'2017-02-12',0,1,7),
+	(2,'为楼主点赞',5,'2017-02-12',0,1,7),
+	(3,'为楼主点赞',1,'2017-02-14',0,1,7),
+	(4,'为楼主点赞',0,'2017-03-04',0,1,7),
+	(5,'为楼主点赞',0,'2017-03-04',0,1,7),
+	(6,'为楼主点赞',0,'2017-03-04',2,2,7),
+	(7,'为了避免违约，想买房的非京籍家庭若个税或社保有断缴情况，建议先去不动产登记中心确认购房资质再签合同。',0,'2017-03-04',2,2,7),
+	(8,'为楼主点赞',16,'2017-03-21',0,1,7),
+	(9,'为楼主点赞',9,'2017-03-27',0,1,7),
+	(10,'为楼主点赞',0,'2017-04-05',1,2,7),
+	(11,'撒发达撒的发',17,'2017-04-24',0,1,7),
+	(12,'为楼主点赞',17,'2017-04-24',0,1,7),
+	(13,'为楼主点赞',17,'2017-04-24',0,1,7),
+	(14,'为楼主点赞',17,'2017-04-24',0,1,7),
+	(15,'为楼主点赞',24,'2017-04-29',0,1,7),
+	(16,'为楼主点赞',23,'2017-04-29',0,1,7),
+	(17,'为楼主点赞',22,'2017-05-21',0,1,7),
+	(18,'好房',26,'2017-12-29',0,1,7),
+	(19,'好房',36,'2017-12-29',0,1,7),
+	(20,'好房',30,'2017-12-29',0,1,7),
+	(21,'1111',23,'2018-01-06',0,1,7),
+	(22,'1111',23,'2018-01-06',0,1,7),
+	(23,'什么',0,'2018-01-06',2,2,7),
+	(24,'评论',43,'2018-01-06',0,1,7),
+	(25,'111',43,'2018-01-06',0,1,7),
+	(26,'11',43,'2018-01-06',0,1,7),
+	(27,'2222',43,'2018-01-06',0,1,7),
+	(28,'想买房的非京籍家庭若个税或社保有断缴情况，建议先去不动产登记中心确认购房资质再签合同',0,'2018-01-06',6,2,24),
+	(29,'评论',0,'2018-01-06',5,2,27);
+
+/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `house_msg`;
+
+CREATE TABLE `house_msg` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `msg` varchar(512) NOT NULL DEFAULT '' COMMENT '消息',
+  `create_time` date NOT NULL COMMENT '创建时间',
+  `agent_id` bigint(20) NOT NULL COMMENT '经纪人id',
+  `house_id` bigint(20) NOT NULL COMMENT '房屋id',
+  `user_name` varchar(20) NOT NULL DEFAULT '' COMMENT '用户姓名',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `house_msg` WRITE;
+/*!40000 ALTER TABLE `house_msg` DISABLE KEYS */;
+
+INSERT INTO `house_msg` (`id`, `msg`, `create_time`, `agent_id`, `house_id`, `user_name`)
+VALUES
+	(1,'spring_boot@163.com','2017-02-12',13,5,'sadfasd'),
+	(2,'d','2017-03-27',13,9,'111'),
+	(3,'1','2017-04-29',7,24,'11'),
+	(4,'1','2017-06-29',7,24,'11'),
+	(5,'dafsd','2017-07-23',15,39,'hello'),
+	(6,'1111','2017-07-23',15,39,'hello'),
+	(7,'1111','2018-01-06',15,43,'hello'),
+	(8,'111','2018-01-06',15,41,'wwww'),
+	(9,'111111','2018-01-06',15,39,'111');
+
+/*!40000 ALTER TABLE `house_msg` ENABLE KEYS */;
+UNLOCK TABLES;
+
+# ------------------------------------------------------------
+

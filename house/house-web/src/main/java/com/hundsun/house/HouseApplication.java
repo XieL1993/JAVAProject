@@ -10,4 +10,9 @@ public class HouseApplication {
     public static void main(String[] args) {
         SpringApplication.run(HouseApplication.class, args);
     }
+
+//    @Bean(name = "threadPoolTaskExecutor")
+//    public Executor threadPoolTaskExecutor() {
+//        return new ThreadPoolTaskExecutor();
+//    }
 }

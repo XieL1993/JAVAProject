@@ -34,7 +34,8 @@
                 avatar,
                 type,
                 create_time,
-                enable
+                enable,
+                agency_id
                 )
                 values(
                 #{name},
@@ -45,7 +46,8 @@
                 #{avatar},
                 #{type},
                 #{createTime},
-                #{enable}
+                #{enable},
+                #{agencyId}
                 )
     </insert>
     <update id="update">

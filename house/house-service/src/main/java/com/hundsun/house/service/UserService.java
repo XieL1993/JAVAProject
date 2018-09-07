@@ -16,6 +16,8 @@ public interface UserService {
 
     List<User> getUserByQuery(User user);
 
+    User getUserById(Long id);
+
     void updateUser(UserVo userVo, String email);
 
     void resetNotify(String username);

@@ -69,6 +69,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserById(Long id) {
+        User query = new User();
+        query.setId(id);
+        List<User> users = getUserByQuery(query);
+        if (!users.isEmpty()) {
+            return users.get(0);
+        }
+        return null;
+    }
+
+    @Override
     public void updateUser(UserVo userVo, String email) {
         userVo.setEmail(email);
         BeanHelper.onUpdate(userVo);

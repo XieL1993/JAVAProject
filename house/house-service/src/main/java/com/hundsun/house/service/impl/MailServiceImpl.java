@@ -59,6 +59,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Async
+    @Override
     public void sendMail(String title, String content, String email) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
@@ -72,7 +73,7 @@ public class MailServiceImpl implements MailService {
     @Override
     public void registerNotify(String email) {
         String randomKey = RandomStringUtils.randomAlphabetic(10);
-        resetCache.put(randomKey, email);
+        registerCache.put(randomKey, email);
         String content = "http://" + domainName + ":" + port + "/accounts/verify?key=" + randomKey;
         sendMail("房产平台激活邮件", content, email);
     }
@@ -91,6 +92,7 @@ public class MailServiceImpl implements MailService {
         return true;
     }
 
+    @Async
     @Override
     public void resetNotify(String email) {
         String randomKey = RandomStringUtils.randomAlphabetic(10);
