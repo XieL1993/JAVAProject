@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="static/static.js"></script>
+    <style type="text/css">
+        .main {
+            padding: 30px;
+        }
+
+        .toolbar {
+            width: 1000px;
+            background: #1f637b;
+            color: white;
+            white-space: nowrap;
+            line-height: 50px;
+            overflow: auto;
+            padding: 0 10px;
+            font-size: 14px;
+            margin-top: 50px;
+        }
+
+        button {
+            width: 80px;
+            height: 30px;
+            background: #2b93ed;
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            line-height: 30px;
+            border: none;
+            margin: 10px 200px;
+        }
+
+        .fixed {
+            position: fixed;
+            bottom: 50px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="toolbar">
+        郑爽，1991年8月22日出生于辽宁省沈阳市，毕业于北京电影学院，中国内地影视女演员。2009年，郑爽因主演现代剧《一起来看流星雨》进入演艺圈，并凭借该系列剧获得第25届中国电视金鹰奖电视剧最佳女演员提名。2012年，郑爽凭借个人首部电影《画壁》获得香港电影导演协会年度新演员金奖和第31届香港电影金像奖最佳新人奖提名。2014年，她因主演仙侠剧《古剑奇谭》而获得第13届华鼎奖全国观众最喜欢的影视演员。2015年，郑爽凭借民国剧《抓住彩虹的男人》获得第19届华鼎奖中国近现代题材电视剧最佳
+    </div>
+    <button id="button">固定</button>
+    <button id="button2">滑动</button>
+    <input type="text" class="a">
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#button2").click(function () {
+            // $(".toolbar").toggleClass("fixed");
+            $(".toolbar").scrollLeft(500);
+        })
+        $("#button").click(function () {
+            $(".toolbar").toggleClass("fixed").width(500);
+            // $(".toolbar").scrollLeft(500);
+            // $('input').val(123)
+            $('input').trigger("value", [111]);
+            $('input').trigger('aaa')
+        })
+        $('input').bind('aaa', function() {
+            //进行相关操作
+            alert(1)
+        });
+    })
+</script>
+</body>
+</html>

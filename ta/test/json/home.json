@@ -1,0 +1,57 @@
+{
+  "total": 28,
+  "rows": [
+    {
+      "fundTcode":"TA",
+      "fundcode": "000000",
+      "fundname": "XXXXXX客户名称",
+      "fundstatus": "申购",
+      "fundbatch": "XXXXXXX",
+      "funddire": "XXXXXXX",
+      "funddate": "2018-03-27"
+    },
+    {
+      "fundTcode":"TA",
+      "fundcode": "000000",
+      "fundname": "XXXXXX客户名称",
+      "fundstatus": "申购",
+      "fundbatch": "XXXXXXX",
+      "funddire": "XXXXXXX",
+      "funddate": "2018-03-27"
+    },
+    {
+      "fundTcode":"TA",
+      "fundcode": "000000",
+      "fundname": "XXXXXX客户名称",
+      "fundstatus": "申购",
+      "fundbatch": "XXXXXXX",
+      "funddire": "XXXXXXX",
+      "funddate": "2018-03-27"
+    },
+    {
+      "fundTcode":"TA",
+      "fundcode": "000000",
+      "fundname": "XXXXXX客户名称",
+      "fundstatus": "申购",
+      "fundbatch": "XXXXXXX",
+      "funddire": "XXXXXXX",
+      "funddate": "2018-03-27"
+    },
+    {
+      "fundTcode":"TA",
+      "fundcode": "000000",
+      "fundname": "XXXXXX客户名称",
+      "fundstatus": "申购",
+      "fundbatch": "XXXXXXX",
+      "funddire": "XXXXXXX",
+      "funddate": "2018-03-27"
+    }
+
+  ],
+  "footer": [
+    {
+      "cid": "汇总：",
+      "ctanum": ""
+    }
+  ]
+}

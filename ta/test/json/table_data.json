@@ -1,0 +1,22 @@
+[
+	{
+		"sumrank":"(0,1)",
+		"orderrank":"(1,4)",
+		"subsistrank":"(0,100)"
+	},
+	{
+		"sumrank":"[1,6)",
+		"orderrank":"",
+		"subsistrank":"[100,200)"
+	},
+	{
+		"sumrank":"[6,∞)",
+		"orderrank":"(1,4)",
+		"subsistrank":"[200,+∞)"
+	},
+	{
+		"sumrank":"[6,∞)",
+		"orderrank":"(1,4)",
+		"subsistrank":"[200,+∞)"
+	}
+]

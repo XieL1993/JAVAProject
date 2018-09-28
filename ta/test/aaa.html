@@ -1,0 +1,2328 @@
+
+<!DOCTYPE html>
+
+<html class="hs-ui-html" lang="zh">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>主框架</title>
+    <link rel="stylesheet" type="text/css" href="/bomp/static/taui/hsui/base.css" />
+    <link rel="stylesheet" type="text/css" href="/bomp/static/taui/hsui/hs-ui.css" />
+    <link rel="stylesheet" type="text/css" href="/bomp/static/taui/hsui/hs-ta-layout.css" />
+    <link rel="stylesheet" type="text/css" href="/bomp/static/taui/hsui/search-prop.css" />
+    <link rel="stylesheet" type="text/css" href="/bomp/static/taui/iconfont/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/bomp/static/is/is.min.css" />
+    <link rel="stylesheet" type="text/css" href="/bomp/static/My97DatePicker/skin/WdatePicker.css" />
+    <link rel="stylesheet" type="text/css" href="/bomp/static/taui/hsui/tacomponent_new.css" />
+
+    <script type="text/javascript" src="/bomp/static/jquery/1_11_3/jquery.min.js"></script>
+    <script type="text/javascript" src="/bomp/static/is/is.min.js"></script>
+    <script type="text/javascript" src="/bomp/static/jquery-easyui/1_4_3/easyloader.js"></script>
+    <script type="text/javascript" src="/bomp/static/layer/layer.js"></script>
+    <script type="text/javascript" src="/bomp/static/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/bomp/static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/bomp/static/global.js"></script>
+    <script type="text/javascript" src="/bomp/static/jquery.SuperSlide.2.1.1.js"></script>
+    <script type="text/javascript" src="/bomp/static/underscore-min.js"></script>
+
+    <script type="text/javascript" src="/bomp/static/default/js/layout.js"></script>
+    <script type="text/javascript" src="/bomp/static/jquery-ui/1_11_4/jquery.ui.base.min.js"></script>
+    <script type="text/javascript" src="/bomp/static/laydate/laydate.js"></script>
+    <script type="text/javascript" src="/bomp/static/validation/1_14/jquery.metadata.js"></script>
+    <script type="text/javascript" src="/bomp/static/validation/1_14/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/bomp/static/validation/validation.init.js"></script>
+    <script type="text/javascript" src="/bomp/static/webui/webForm.js"></script>
+    <script type="text/javascript" src="/bomp/static/UIComponents/AllInOne.js"></script>
+    <script type="text/javascript" src="/bomp/static/default/js/jquery.expandMenu.js"></script>
+    <script type="text/javascript" src="/bomp/static/default/js/calendar.js"></script>
+    <script type="text/javascript" src="/bomp/static/default/js/extValidate.js"></script>
+    <script type="text/javascript" src="/bomp/static/default/js/otherAction.js"></script>
+    <script type="text/javascript" src="/bomp/static/default/js/taCommon.js"></script>
+</head>
+
+<body class="hs-ui-body hs-ui-load-page">
+
+
+
+<!--错误弹出框-->
+<div id="no-shadow-tips" style="display:none">
+    <div class="dialog-content cle">
+        <div class="notice-detail-box tips">
+            <div id="error-message" class="notice-detail-text">
+
+            </div>
+        </div>
+    </div>
+    <div class="dialog-btn">
+        <button class="hs-ui-btn hs-blue-btn" onclick="layer.closeAll()">知道了</button>
+    </div>
+</div>
+
+<!--保存成功罩弹出框-->
+<div id="save-ok" style="display:none">
+    <div class="dialog-content cle">
+        <div class="notice-detail-box tips-ok">
+            <div id="ok-message" class="notice-detail-text">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    /*<![CDATA[*/
+    function getRootPath()  {
+        var contextPath = '/bomp/';
+        return contextPath;
+    }
+
+    $(function() {
+        //tab
+        $(".hs-ui-tab").each(function() {
+            var _self = $(this);
+            var tabItem = $(".hs-ui-tab-item", _self);
+            var tabContent = $(".hs-ui-tab-box", _self);
+            tabItem.on("click", function() {
+                var _self = $(this);
+                _self.addClass("ui-tab-on").siblings().removeClass("ui-tab-on");
+                var index = _self.index();
+                tabContent.eq(index).show().siblings().hide();
+            });
+        });
+
+    });
+
+
+    var index;
+    function  showMessage_One(message,isOk,functionStr) {
+        if(isOk){
+            $("#ok-message").html(message);
+            index=layer.open({
+                type: 1,
+                skin: 'layui-layer-white', //样式类名
+                shift: 0,
+                move: false,
+                area: ['320px', 'auto'],
+                title: '',
+                shade: 0,
+                closeBtn: 0,
+                shadeClose: false, //开启遮罩关闭
+                content: $('#save-ok')
+            });
+            setTimeout(functionStr,1500);
+        }else{
+            $("#error-message").html(message);
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-white', //样式类名
+                shift: 0,
+                move: false,
+                area: ['420px', 'auto'],
+                title: '',
+                shade: 0,
+                closeBtn: 0,
+                shadeClose: false, //开启遮罩关闭
+                content: $('#no-shadow-tips')
+            });
+        }
+
+    }
+    /*]]>*/
+</script>
+<style>
+    .hs-query-panel .frm-item-panel{display: none;}
+    .frm-item-panel.rate-slect-box {
+        width: 100%;
+        margin-top: 10%;
+        padding-right: 22%;
+        box-sizing: border-box;
+    }
+    .rate-prop3 .chosen-container.chosen-container-single {
+        width: 300px !important;
+
+    }
+    .rate-prop3 select {
+        width:100%;
+    }
+    .rate-prop .dialog-btn {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+    }
+</style>
+<div>
+    <div class="hs-ui-module">
+        <div class="hs-query-panel">
+            <div class="type-item-panel clear none">
+                <div class="frm-label fl">常用搜索</div>
+                <div class="frm-type-content fl">
+                    <ul class="common-word js-common-word clear">
+                        <li data-id="0" class="active">不限</li>
+
+                    </ul>
+                </div>
+            </div>
+            <form id="queryForm">
+                <!-- 查询条件 -->
+                <div class="frm-panel js-frm-panel clear">
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527828" form-item-name="c_tacode" form-item-show="1" name="4527828">
+                        <div class="frm-label fl col-sm-4">TA</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select class="NoBlockSelect" name="c_tacode" value="" ui-type="NoBlockSelect" ui-name="c_tacode" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;jdbc:base:{dynamicDictionary.selectTAInfoUserSet1}&quot;}" ui-data="[{&quot;caption&quot;:&quot;F6:TA1&quot;,&quot;code&quot;:&quot;tainfo_code&quot;,&quot;item&quot;:&quot;F6&quot;},{&quot;caption&quot;:&quot;F7:F70000&quot;,&quot;code&quot;:&quot;tainfo_code&quot;,&quot;item&quot;:&quot;F7&quot;}]">
+                                    <option name="c_tacode" value="F6">F6:TA1</option>
+                                    <option name="c_tacode" value="F7">F7:F70000</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527829" form-item-name="c_fundacco" form-item-show="1" name="4527829">
+                        <div class="frm-label fl col-sm-4">基金账号</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_fundacco" value="" ui-type="TextInput" ui-name="c_fundacco" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527830" form-item-name="c_accostatus" form-item-show="0" name="4527830">
+                        <div class="frm-label fl col-sm-4">账户状态</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeDictionarySelect" name="c_accostatus" value="" ui-type="MultipeDictionarySelect" ui-name="c_accostatus" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;C20027&quot;}" ui-data="[{&quot;caption&quot;:&quot;F:冻结&quot;,&quot;code&quot;:&quot;C20027&quot;,&quot;id&quot;:4521224,&quot;item&quot;:&quot;F&quot;,&quot;order&quot;:1,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;N:正常&quot;,&quot;code&quot;:&quot;C20027&quot;,&quot;id&quot;:4521225,&quot;item&quot;:&quot;N&quot;,&quot;order&quot;:2,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;T:销户&quot;,&quot;code&quot;:&quot;C20027&quot;,&quot;id&quot;:4521226,&quot;item&quot;:&quot;T&quot;,&quot;order&quot;:3,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401}]">
+                                    <option value=""></option>
+                                    <option value="F">F:冻结</option>
+                                    <option value="N">N:正常</option>
+                                    <option value="T">T:销户</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527831" form-item-name="c_custname" form-item-show="1" name="4527831">
+                        <div class="frm-label fl col-sm-4">客户名称</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_custname" value="" ui-type="TextInput" ui-name="c_custname" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527832" form-item-name="c_custnamelike" form-item-show="1" name="4527832">
+                        <div class="frm-label fl col-sm-4">客户名称(模糊)</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_custnamelike" value="" ui-type="TextInput" ui-name="c_custnamelike" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527833" form-item-name="c_custtype" form-item-show="0" name="4527833">
+                        <div class="frm-label fl col-sm-4">客户类型</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select class="DictionarySelect" name="c_custtype" value="" ui-type="DictionarySelect" ui-name="c_custtype" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;C20026&quot;}" ui-data="[{&quot;caption&quot;:&quot;0:机构&quot;,&quot;code&quot;:&quot;C20026&quot;,&quot;id&quot;:4521220,&quot;item&quot;:&quot;0&quot;,&quot;order&quot;:1,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;1:个人&quot;,&quot;code&quot;:&quot;C20026&quot;,&quot;id&quot;:4521221,&quot;item&quot;:&quot;1&quot;,&quot;order&quot;:2,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;2:产品&quot;,&quot;code&quot;:&quot;C20026&quot;,&quot;id&quot;:4521222,&quot;item&quot;:&quot;2&quot;,&quot;order&quot;:3,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401}]">
+                                    <option value=""></option>
+                                    <option value="0">0:机构</option>
+                                    <option value="1">1:个人</option>
+                                    <option value="2">2:产品</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527834" form-item-name="c_identitype" form-item-show="0" name="4527834">
+                        <div class="frm-label fl col-sm-4">证件类型</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeFilterDictionarySelect" name="c_identitype" value="" ui-type="MultipeFilterDictionarySelect" ui-name="c_identitype" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;jdbc:base:{dynamicDictionary.selectIdentitypeByCust}&quot;}" ui-data="{}">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527835" form-item-name="c_identityno" form-item-show="0" name="4527835">
+                        <div class="frm-label fl col-sm-4">证件号码</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_identityno" value="" ui-type="TextInput" ui-name="c_identityno" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527836" form-item-name="d_idnovaliddate" form-item-show="0" name="4527836">
+                        <div class="frm-label fl col-sm-4">证件有效日期</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+                                <div class="time-rank">
+                                    <span ui-type="DateTimeSectionInput" ui-name="d_idnovaliddate" ui-value="" ui-meta="{}" ui-data="{}" type="text" name="d_idnovaliddate" value="">
+    <input type="text" value="" class="hs-ui-input DateTimeInput short" name="d_idnovaliddate1" />
+    <span class="">-</span>
+    <input type="text" value="" class="hs-ui-input DateTimeInput short" name="d_idnovaliddate2" />
+</span>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527837" form-item-name="d_opendate" form-item-show="0" name="4527837">
+                        <div class="frm-label fl col-sm-4">开户日期</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+                                <div class="time-rank">
+                                    <span ui-type="DateTimeSectionInput" ui-name="d_opendate" ui-value="" ui-meta="{}" ui-data="{}" type="text" name="d_opendate" value="">
+    <input type="text" value="" class="hs-ui-input DateTimeInput short" name="d_opendate1" />
+    <span class="">-</span>
+    <input type="text" value="" class="hs-ui-input DateTimeInput short" name="d_opendate2" />
+</span>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527838" form-item-name="d_lastmodify" form-item-show="0" name="4527838">
+                        <div class="frm-label fl col-sm-4">最后修改日期</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+                                <div class="time-rank">
+                                    <span ui-type="DateTimeSectionInput" ui-name="d_lastmodify" ui-value="" ui-meta="{}" ui-data="{}" type="text" name="d_lastmodify" value="">
+    <input type="text" value="" class="hs-ui-input DateTimeInput short" name="d_lastmodify1" />
+    <span class="">-</span>
+    <input type="text" value="" class="hs-ui-input DateTimeInput short" name="d_lastmodify2" />
+</span>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527839" form-item-name="c_shortname" form-item-show="0" name="4527839">
+                        <div class="frm-label fl col-sm-4">客户简称</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_shortname" value="" ui-type="TextInput" ui-name="c_shortname" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527840" form-item-name="c_zipcode" form-item-show="0" name="4527840">
+                        <div class="frm-label fl col-sm-4">邮政编码</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_zipcode" value="" ui-type="TextInput" ui-name="c_zipcode" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527841" form-item-name="c_address" form-item-show="0" name="4527841">
+                        <div class="frm-label fl col-sm-4">家庭住址</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_address" value="" ui-type="TextInput" ui-name="c_address" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527842" form-item-name="c_phone" form-item-show="0" name="4527842">
+                        <div class="frm-label fl col-sm-4">电话号码</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_phone" value="" ui-type="TextInput" ui-name="c_phone" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527843" form-item-name="c_faxno" form-item-show="0" name="4527843">
+                        <div class="frm-label fl col-sm-4">传真号码</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_faxno" value="" ui-type="TextInput" ui-name="c_faxno" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527844" form-item-name="c_mobileno" form-item-show="0" name="4527844">
+                        <div class="frm-label fl col-sm-4">手机号码</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_mobileno" value="" ui-type="TextInput" ui-name="c_mobileno" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527845" form-item-name="c_email" form-item-show="0" name="4527845">
+                        <div class="frm-label fl col-sm-4">Email地址</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_email" value="" ui-type="TextInput" ui-name="c_email" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527846" form-item-name="c_birthday" form-item-show="0" name="4527846">
+                        <div class="frm-label fl col-sm-4">客户生日</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_birthday" value="" ui-type="TextInput" ui-name="c_birthday" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527847" form-item-name="c_sex" form-item-show="0" name="4527847">
+                        <div class="frm-label fl col-sm-4">客户性别</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeDictionarySelect" name="c_sex" value="" ui-type="MultipeDictionarySelect" ui-name="c_sex" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;C20028&quot;}" ui-data="[{&quot;caption&quot;:&quot;1:男&quot;,&quot;code&quot;:&quot;C20028&quot;,&quot;id&quot;:4521228,&quot;item&quot;:&quot;1&quot;,&quot;order&quot;:1,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;2:女&quot;,&quot;code&quot;:&quot;C20028&quot;,&quot;id&quot;:4521229,&quot;item&quot;:&quot;2&quot;,&quot;order&quot;:2,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401}]">
+                                    <option value=""></option>
+                                    <option value="1">1:男</option>
+                                    <option value="2">2:女</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527848" form-item-name="c_vocation" form-item-show="0" name="4527848">
+                        <div class="frm-label fl col-sm-4">职业</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeDictionarySelect" name="c_vocation" value="" ui-type="MultipeDictionarySelect" ui-name="c_vocation" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;C20042&quot;}" ui-data="[{&quot;caption&quot;:&quot;01:党政机关/事业单位&quot;,&quot;code&quot;:&quot;C20042&quot;,&quot;id&quot;:4521297,&quot;item&quot;:&quot;01&quot;,&quot;order&quot;:1,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;02:企业单位&quot;,&quot;code&quot;:&quot;C20042&quot;,&quot;id&quot;:4521298,&quot;item&quot;:&quot;02&quot;,&quot;order&quot;:2,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;03:自由业主&quot;,&quot;code&quot;:&quot;C20042&quot;,&quot;id&quot;:4521299,&quot;item&quot;:&quot;03&quot;,&quot;order&quot;:3,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;04:学生&quot;,&quot;code&quot;:&quot;C20042&quot;,&quot;id&quot;:4521300,&quot;item&quot;:&quot;04&quot;,&quot;order&quot;:4,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;05:军人&quot;,&quot;code&quot;:&quot;C20042&quot;,&quot;id&quot;:4521301,&quot;item&quot;:&quot;05&quot;,&quot;order&quot;:5,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;06:其他&quot;,&quot;code&quot;:&quot;C20042&quot;,&quot;id&quot;:4521302,&quot;item&quot;:&quot;06&quot;,&quot;order&quot;:6,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401}]">
+                                    <option value=""></option>
+                                    <option value="01">01:党政机关/事业单位</option>
+                                    <option value="02">02:企业单位</option>
+                                    <option value="03">03:自由业主</option>
+                                    <option value="04">04:学生</option>
+                                    <option value="05">05:军人</option>
+                                    <option value="06">06:其他</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527849" form-item-name="c_education" form-item-show="0" name="4527849">
+                        <div class="frm-label fl col-sm-4">学历</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeDictionarySelect" name="c_education" value="" ui-type="MultipeDictionarySelect" ui-name="c_education" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;C20037&quot;}" ui-data="[{&quot;caption&quot;:&quot;01:研究生&quot;,&quot;code&quot;:&quot;C20037&quot;,&quot;id&quot;:4521275,&quot;item&quot;:&quot;01&quot;,&quot;order&quot;:1,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;02:大学本科&quot;,&quot;code&quot;:&quot;C20037&quot;,&quot;id&quot;:4521276,&quot;item&quot;:&quot;02&quot;,&quot;order&quot;:2,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;03:大学专科&quot;,&quot;code&quot;:&quot;C20037&quot;,&quot;id&quot;:4521277,&quot;item&quot;:&quot;03&quot;,&quot;order&quot;:3,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;04:中专或技校&quot;,&quot;code&quot;:&quot;C20037&quot;,&quot;id&quot;:4521278,&quot;item&quot;:&quot;04&quot;,&quot;order&quot;:4,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;05:技工学校&quot;,&quot;code&quot;:&quot;C20037&quot;,&quot;id&quot;:4521279,&quot;item&quot;:&quot;05&quot;,&quot;order&quot;:5,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;06:高中&quot;,&quot;code&quot;:&quot;C20037&quot;,&quot;id&quot;:4521280,&quot;item&quot;:&quot;06&quot;,&quot;order&quot;:6,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;07:初中&quot;,&quot;code&quot;:&quot;C20037&quot;,&quot;id&quot;:4521281,&quot;item&quot;:&quot;07&quot;,&quot;order&quot;:7,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;08:小学&quot;,&quot;code&quot;:&quot;C20037&quot;,&quot;id&quot;:4521282,&quot;item&quot;:&quot;08&quot;,&quot;order&quot;:8,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;09:文盲或半文盲&quot;,&quot;code&quot;:&quot;C20037&quot;,&quot;id&quot;:4521283,&quot;item&quot;:&quot;09&quot;,&quot;order&quot;:9,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401}]">
+                                    <option value=""></option>
+                                    <option value="01">01:研究生</option>
+                                    <option value="02">02:大学本科</option>
+                                    <option value="03">03:大学专科</option>
+                                    <option value="04">04:中专或技校</option>
+                                    <option value="05">05:技工学校</option>
+                                    <option value="06">06:高中</option>
+                                    <option value="07">07:初中</option>
+                                    <option value="08">08:小学</option>
+                                    <option value="09">09:文盲或半文盲</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527850" form-item-name="c_annualearnings" form-item-show="0" name="4527850">
+                        <div class="frm-label fl col-sm-4">年收入</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_annualearnings" value="" ui-type="TextInput" ui-name="c_annualearnings" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527851" form-item-name="c_corpname" form-item-show="0" name="4527851">
+                        <div class="frm-label fl col-sm-4">工作单位名称</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_corpname" value="" ui-type="TextInput" ui-name="c_corpname" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527852" form-item-name="c_corptel" form-item-show="0" name="4527852">
+                        <div class="frm-label fl col-sm-4">工作单位电话</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_corptel" value="" ui-type="TextInput" ui-name="c_corptel" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527853" form-item-name="c_contact" form-item-show="0" name="4527853">
+                        <div class="frm-label fl col-sm-4">经办人姓名</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_contact" value="" ui-type="TextInput" ui-name="c_contact" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527854" form-item-name="c_contype" form-item-show="0" name="4527854">
+                        <div class="frm-label fl col-sm-4">经办人证件类型</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeDictionarySelect" name="c_contype" value="" ui-type="MultipeDictionarySelect" ui-name="c_contype" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;C20022&quot;}" ui-data="[{&quot;caption&quot;:&quot;0:身份证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521183,&quot;item&quot;:&quot;0&quot;,&quot;order&quot;:1,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;1:护照&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521184,&quot;item&quot;:&quot;1&quot;,&quot;order&quot;:2,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;2:军官证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521185,&quot;item&quot;:&quot;2&quot;,&quot;order&quot;:3,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;3:士兵证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521186,&quot;item&quot;:&quot;3&quot;,&quot;order&quot;:4,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;4:港澳居民来往内地通行证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521187,&quot;item&quot;:&quot;4&quot;,&quot;order&quot;:5,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;5:户口本&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521188,&quot;item&quot;:&quot;5&quot;,&quot;order&quot;:6,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;6:外国护照&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521189,&quot;item&quot;:&quot;6&quot;,&quot;order&quot;:7,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;7:其他&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521190,&quot;item&quot;:&quot;7&quot;,&quot;order&quot;:8,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;8:文职证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521191,&quot;item&quot;:&quot;8&quot;,&quot;order&quot;:9,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;9:警官证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521192,&quot;item&quot;:&quot;9&quot;,&quot;order&quot;:10,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;a:警官证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521193,&quot;item&quot;:&quot;a&quot;,&quot;order&quot;:11,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;b:文职证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521194,&quot;item&quot;:&quot;b&quot;,&quot;order&quot;:12,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;A:台胞证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521195,&quot;item&quot;:&quot;A&quot;,&quot;order&quot;:13,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;B:外国人永久居留身份证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:126628,&quot;item&quot;:&quot;B&quot;,&quot;order&quot;:14,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;C:港澳台居民居住证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521196,&quot;item&quot;:&quot;C&quot;,&quot;order&quot;:14,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401}]">
+                                    <option value=""></option>
+                                    <option value="0">0:身份证</option>
+                                    <option value="1">1:护照</option>
+                                    <option value="2">2:军官证</option>
+                                    <option value="3">3:士兵证</option>
+                                    <option value="4">4:港澳居民来往内地通行证</option>
+                                    <option value="5">5:户口本</option>
+                                    <option value="6">6:外国护照</option>
+                                    <option value="7">7:其他</option>
+                                    <option value="8">8:文职证</option>
+                                    <option value="9">9:警官证</option>
+                                    <option value="a">a:警官证</option>
+                                    <option value="b">b:文职证</option>
+                                    <option value="A">A:台胞证</option>
+                                    <option value="B">B:外国人永久居留身份证</option>
+                                    <option value="C">C:港澳台居民居住证</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527855" form-item-name="c_contno" form-item-show="0" name="4527855">
+                        <div class="frm-label fl col-sm-4">经办人证件号码</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_contno" value="" ui-type="TextInput" ui-name="c_contno" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527856" form-item-name="c_billsendflag" form-item-show="0" name="4527856">
+                        <div class="frm-label fl col-sm-4">对账单寄送方式</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeDictionarySelect" name="c_billsendflag" value="" ui-type="MultipeDictionarySelect" ui-name="c_billsendflag" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;C20029&quot;}" ui-data="[{&quot;caption&quot;:&quot;1:不寄送&quot;,&quot;code&quot;:&quot;C20029&quot;,&quot;id&quot;:4521231,&quot;item&quot;:&quot;1&quot;,&quot;order&quot;:1,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;2:按月&quot;,&quot;code&quot;:&quot;C20029&quot;,&quot;id&quot;:4521232,&quot;item&quot;:&quot;2&quot;,&quot;order&quot;:2,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;3:按季&quot;,&quot;code&quot;:&quot;C20029&quot;,&quot;id&quot;:4521233,&quot;item&quot;:&quot;3&quot;,&quot;order&quot;:3,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;4:半年&quot;,&quot;code&quot;:&quot;C20029&quot;,&quot;id&quot;:4521234,&quot;item&quot;:&quot;4&quot;,&quot;order&quot;:4,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;5:一年&quot;,&quot;code&quot;:&quot;C20029&quot;,&quot;id&quot;:4521235,&quot;item&quot;:&quot;5&quot;,&quot;order&quot;:5,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401}]">
+                                    <option value=""></option>
+                                    <option value="1">1:不寄送</option>
+                                    <option value="2">2:按月</option>
+                                    <option value="3">3:按季</option>
+                                    <option value="4">4:半年</option>
+                                    <option value="5">5:一年</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527857" form-item-name="c_billsendpass" form-item-show="0" name="4527857">
+                        <div class="frm-label fl col-sm-4">对账单寄送途径</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeDictionarySelect" name="c_billsendpass" value="" ui-type="MultipeDictionarySelect" ui-name="c_billsendpass" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;C20030&quot;}" ui-data="[{&quot;caption&quot;:&quot;1:邮寄&quot;,&quot;code&quot;:&quot;C20030&quot;,&quot;id&quot;:4521237,&quot;item&quot;:&quot;1&quot;,&quot;order&quot;:1,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;2:Email&quot;,&quot;code&quot;:&quot;C20030&quot;,&quot;id&quot;:4521238,&quot;item&quot;:&quot;2&quot;,&quot;order&quot;:2,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;3:短信&quot;,&quot;code&quot;:&quot;C20030&quot;,&quot;id&quot;:4521239,&quot;item&quot;:&quot;3&quot;,&quot;order&quot;:3,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;4:传真&quot;,&quot;code&quot;:&quot;C20030&quot;,&quot;id&quot;:4521240,&quot;item&quot;:&quot;4&quot;,&quot;order&quot;:4,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401}]">
+                                    <option value=""></option>
+                                    <option value="1">1:邮寄</option>
+                                    <option value="2">2:Email</option>
+                                    <option value="3">3:短信</option>
+                                    <option value="4">4:传真</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527858" form-item-name="c_callcenter" form-item-show="0" name="4527858">
+                        <div class="frm-label fl col-sm-4">开通CallCenter标志</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeDictionarySelect" name="c_callcenter" value="" ui-type="MultipeDictionarySelect" ui-name="c_callcenter" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;C20080&quot;}" ui-data="[{&quot;caption&quot;:&quot;0:否&quot;,&quot;code&quot;:&quot;C20080&quot;,&quot;id&quot;:4521587,&quot;item&quot;:&quot;0&quot;,&quot;order&quot;:1,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;1:是&quot;,&quot;code&quot;:&quot;C20080&quot;,&quot;id&quot;:4521588,&quot;item&quot;:&quot;1&quot;,&quot;order&quot;:2,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401}]">
+                                    <option value=""></option>
+                                    <option value="0">0:否</option>
+                                    <option value="1">1:是</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527859" form-item-name="c_internet" form-item-show="0" name="4527859">
+                        <div class="frm-label fl col-sm-4">开通网上交易标志</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeDictionarySelect" name="c_internet" value="" ui-type="MultipeDictionarySelect" ui-name="c_internet" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;C20080&quot;}" ui-data="[{&quot;caption&quot;:&quot;0:否&quot;,&quot;code&quot;:&quot;C20080&quot;,&quot;id&quot;:4521587,&quot;item&quot;:&quot;0&quot;,&quot;order&quot;:1,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;1:是&quot;,&quot;code&quot;:&quot;C20080&quot;,&quot;id&quot;:4521588,&quot;item&quot;:&quot;1&quot;,&quot;order&quot;:2,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401}]">
+                                    <option value=""></option>
+                                    <option value="0">0:否</option>
+                                    <option value="1">1:是</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527860" form-item-name="c_nationality" form-item-show="0" name="4527860">
+                        <div class="frm-label fl col-sm-4">国籍</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_nationality" value="" ui-type="TextInput" ui-name="c_nationality" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527861" form-item-name="c_lawname" form-item-show="0" name="4527861">
+                        <div class="frm-label fl col-sm-4">法人姓名</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_lawname" value="" ui-type="TextInput" ui-name="c_lawname" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527862" form-item-name="c_lawidtype" form-item-show="0" name="4527862">
+                        <div class="frm-label fl col-sm-4">法人证件类型</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeDictionarySelect" name="c_lawidtype" value="" ui-type="MultipeDictionarySelect" ui-name="c_lawidtype" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;C20022&quot;}" ui-data="[{&quot;caption&quot;:&quot;0:身份证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521183,&quot;item&quot;:&quot;0&quot;,&quot;order&quot;:1,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;1:护照&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521184,&quot;item&quot;:&quot;1&quot;,&quot;order&quot;:2,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;2:军官证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521185,&quot;item&quot;:&quot;2&quot;,&quot;order&quot;:3,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;3:士兵证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521186,&quot;item&quot;:&quot;3&quot;,&quot;order&quot;:4,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;4:港澳居民来往内地通行证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521187,&quot;item&quot;:&quot;4&quot;,&quot;order&quot;:5,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;5:户口本&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521188,&quot;item&quot;:&quot;5&quot;,&quot;order&quot;:6,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;6:外国护照&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521189,&quot;item&quot;:&quot;6&quot;,&quot;order&quot;:7,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;7:其他&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521190,&quot;item&quot;:&quot;7&quot;,&quot;order&quot;:8,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;8:文职证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521191,&quot;item&quot;:&quot;8&quot;,&quot;order&quot;:9,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;9:警官证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521192,&quot;item&quot;:&quot;9&quot;,&quot;order&quot;:10,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;a:警官证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521193,&quot;item&quot;:&quot;a&quot;,&quot;order&quot;:11,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;b:文职证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521194,&quot;item&quot;:&quot;b&quot;,&quot;order&quot;:12,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;A:台胞证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521195,&quot;item&quot;:&quot;A&quot;,&quot;order&quot;:13,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;B:外国人永久居留身份证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:126628,&quot;item&quot;:&quot;B&quot;,&quot;order&quot;:14,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;C:港澳台居民居住证&quot;,&quot;code&quot;:&quot;C20022&quot;,&quot;id&quot;:4521196,&quot;item&quot;:&quot;C&quot;,&quot;order&quot;:14,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401}]">
+                                    <option value=""></option>
+                                    <option value="0">0:身份证</option>
+                                    <option value="1">1:护照</option>
+                                    <option value="2">2:军官证</option>
+                                    <option value="3">3:士兵证</option>
+                                    <option value="4">4:港澳居民来往内地通行证</option>
+                                    <option value="5">5:户口本</option>
+                                    <option value="6">6:外国护照</option>
+                                    <option value="7">7:其他</option>
+                                    <option value="8">8:文职证</option>
+                                    <option value="9">9:警官证</option>
+                                    <option value="a">a:警官证</option>
+                                    <option value="b">b:文职证</option>
+                                    <option value="A">A:台胞证</option>
+                                    <option value="B">B:外国人永久居留身份证</option>
+                                    <option value="C">C:港澳台居民居住证</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527863" form-item-name="c_lawidno" form-item-show="0" name="4527863">
+                        <div class="frm-label fl col-sm-4">法人证件号码</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_lawidno" value="" ui-type="TextInput" ui-name="c_lawidno" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527864" form-item-name="c_broker" form-item-show="0" name="4527864">
+                        <div class="frm-label fl col-sm-4">经纪人</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_broker" value="" ui-type="TextInput" ui-name="c_broker" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527865" form-item-name="c_recommendertype" form-item-show="0" name="4527865">
+                        <div class="frm-label fl col-sm-4">推荐人类型</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeDictionarySelect" name="c_recommendertype" value="" ui-type="MultipeDictionarySelect" ui-name="c_recommendertype" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;C20031&quot;}" ui-data="[{&quot;caption&quot;:&quot;0:其他&quot;,&quot;code&quot;:&quot;C20031&quot;,&quot;id&quot;:4521242,&quot;item&quot;:&quot;0&quot;,&quot;order&quot;:1,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;1:内部员工&quot;,&quot;code&quot;:&quot;C20031&quot;,&quot;id&quot;:4521243,&quot;item&quot;:&quot;1&quot;,&quot;order&quot;:2,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;2:注册用户&quot;,&quot;code&quot;:&quot;C20031&quot;,&quot;id&quot;:4521244,&quot;item&quot;:&quot;2&quot;,&quot;order&quot;:3,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;3:基金账户&quot;,&quot;code&quot;:&quot;C20031&quot;,&quot;id&quot;:4521245,&quot;item&quot;:&quot;3&quot;,&quot;order&quot;:4,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;4:客户经理编号&quot;,&quot;code&quot;:&quot;C20031&quot;,&quot;id&quot;:4521246,&quot;item&quot;:&quot;4&quot;,&quot;order&quot;:5,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401},{&quot;caption&quot;:&quot;5:客户经理姓名&quot;,&quot;code&quot;:&quot;C20031&quot;,&quot;id&quot;:4521247,&quot;item&quot;:&quot;5&quot;,&quot;order&quot;:6,&quot;tenantCode&quot;:&quot;*&quot;,&quot;tenantId&quot;:58401}]">
+                                    <option value=""></option>
+                                    <option value="0">0:其他</option>
+                                    <option value="1">1:内部员工</option>
+                                    <option value="2">2:注册用户</option>
+                                    <option value="3">3:基金账户</option>
+                                    <option value="4">4:客户经理编号</option>
+                                    <option value="5">5:客户经理姓名</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527866" form-item-name="c_recommender" form-item-show="0" name="4527866">
+                        <div class="frm-label fl col-sm-4">推荐人</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_recommender" value="" ui-type="TextInput" ui-name="c_recommender" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527867" form-item-name="c_cityno" form-item-show="0" name="4527867">
+                        <div class="frm-label fl col-sm-4">城市编号</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeDictionarySelect" name="c_cityno" value="" ui-type="MultipeDictionarySelect" ui-name="c_cityno" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;jdbc:base:{dynamicDictionary.selectCityNo}&quot;}" ui-data="[{&quot;caption&quot;:&quot;111:1111&quot;,&quot;code&quot;:&quot;cityno&quot;,&quot;item&quot;:&quot;111&quot;},{&quot;caption&quot;:&quot;杭州:杭州&quot;,&quot;code&quot;:&quot;cityno&quot;,&quot;item&quot;:&quot;杭州&quot;},{&quot;caption&quot;:&quot;2:2&quot;,&quot;code&quot;:&quot;cityno&quot;,&quot;item&quot;:&quot;2&quot;},{&quot;caption&quot;:&quot;5555:1122&quot;,&quot;code&quot;:&quot;cityno&quot;,&quot;item&quot;:&quot;5555&quot;},{&quot;caption&quot;:&quot;1222:333&quot;,&quot;code&quot;:&quot;cityno&quot;,&quot;item&quot;:&quot;1222&quot;}]">
+                                    <option value=""></option>
+                                    <option value="111">111:1111</option>
+                                    <option value="杭州">杭州:杭州</option>
+                                    <option value="2">2:2</option>
+                                    <option value="5555">5555:1122</option>
+                                    <option value="1222">1222:333</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527868" form-item-name="c_actcode" form-item-show="0" name="4527868">
+                        <div class="frm-label fl col-sm-4">特殊代码</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_actcode" value="" ui-type="TextInput" ui-name="c_actcode" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527869" form-item-name="c_backreason" form-item-show="0" name="4527869">
+                        <div class="frm-label fl col-sm-4">退信原因</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_backreason" value="" ui-type="TextInput" ui-name="c_backreason" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527782" form-item-name="c_accountcardid" form-item-show="0" name="4527782">
+                        <div class="frm-label fl col-sm-4">基金账户卡的凭证号</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="c_accountcardid" value="" ui-type="TextInput" ui-name="c_accountcardid" ui-value="" ui-meta="{}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527870" form-item-name="c_institutiontype" form-item-show="0" name="4527870">
+                        <div class="frm-label fl col-sm-4">机构类型</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <select multiple="true" class="MultipeFilterDictionarySelect" name="c_institutiontype" value="" ui-type="MultipeFilterDictionarySelect" ui-name="c_institutiontype" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;jdbc:base:{dynamicDictionary.selectInstiByCust}&quot;}" ui-data="{}">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="frm-item-panel clear fl" form-item-id="4527871" form-item-name="TA400param" category="hidden" form-item-show="0" name="4527871">
+                        <div class="frm-label fl col-sm-4">新400接口参数</div>
+
+                        <div class="frm-content fl col-sm-8">
+                            <div class="frm-input-item">
+
+
+                                <input class="TextInput" name="TA400param" value="" ui-type="TextInput" ui-name="TA400param" ui-value="" ui-meta="{&quot;dictName&quot;:&quot;control_selectTAparamByTA&quot;}" ui-data="{}" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- 联动配置 -->
+                    <div>
+                        <!-- 多TA改造  -->
+                        <ul style="display:none">
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;c_agencyno&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;c_tacode&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;c_managercode&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;c_tacode&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;c_netno&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;c_tacode&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;c_fundcode&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;c_tacode&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;C_AGENCYNO&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;C_TACODE&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;C_MANAGERCODE&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;C_TACODE&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;C_NETNO&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;C_TACODE&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;C_FUNDCODE&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;C_TACODE&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;C_AGENCYNO&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;c_tacode&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;C_MANAGERCODE&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;c_tacode&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;C_NETNO&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;c_tacode&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;C_FUNDCODE&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;c_tacode&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;C_OTHERAGENCY&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;c_tacode&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;c_agencyno&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;C_TACODE&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;c_managercode&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;C_TACODE&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;c_netno&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;C_TACODE&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;c_fundcode&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;C_TACODE&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                        </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <ul style="display:none">
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;c_identitype&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;c_custtype&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;c_institutiontype&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;c_tacode&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;TA400param&quot;,&quot;uiEvent&quot;:&quot;refresh&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;c_tacode&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                            <li ui-event="{&quot;eventTarget&quot;:{&quot;uiName&quot;:&quot;c_institutiontype&quot;,&quot;uiEvent&quot;:&quot;filter&quot;},&quot;eventSource&quot;:{&quot;uiName&quot;:&quot;c_custtype&quot;,&quot;uiEvent&quot;:&quot;selectChange&quot;}}"></li>
+                        </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                    <div class="frm-item-action clear fr js-frm-item-action">
+                        <a href="javascript:;" class="hs-ui-btn btn-primary js-checked-btn" style=" margin-left: 33.3%">查询</a>
+                        <a href="javascript:;" class="hs-ui-btn js-reset-btn">重置</a>
+                    </div>
+                </div>
+                <div class="frm-item-action clear js-frm-item-action none" style=" margin:10px auto;text-align: center;">
+                    <a href="javascript:;" class="hs-ui-btn btn-primary js-checked-btn">查询</a>
+                    <a href="javascript:;" class="hs-ui-btn js-reset-btn">重置</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 总计 -->
+
+
+    <!-- 导出、查询列名搜索框 -->
+    <div class="hs-ui-middle-content">
+        <div class="hs-ui-middle-title">
+            <div class="hs-title-title-txt clear">
+                <div class="export-panel fl js-export-panel">
+                        <span class="item-sort fl">
+                            <i class="icon iconfont icon-daochu"></i>
+                            <i class="icon iconfont icon-xialajiantou"></i>
+                        </span>
+                    <div class="child-ul">
+                        <ul>
+                            <li><a href="javascript:;" id="export-btn" exporttype="0">导出本页</a></li>
+                            <li><a href="javascript:;" id="exportAll-btn" exporttype="1">导出全部</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <span class="item-sort fl js-set-lists">
+                    <i class="icon iconfont icon-liebiao"></i>
+                </span>
+                <div class="hs-ui-search dh-search-panel clear fl">
+                    <div class="search-icoBtn"><i class="icon iconfont icon-search"></i></div>
+                    <input type="text" class="hs-ui-input fl" id="datagrid-table-search" placeholder="请输入列表标题名称" style="height:32px;" />
+                    <div class="dh-search-lists">
+                        <ul></ul>
+                    </div>
+                </div>
+                <div class="top-pagination fr"></div>
+            </div>
+        </div>
+
+        <div class="hs-ui-table">
+            <table id="trade-table"></table>
+            <div class="data-table-loading">
+                <div class="no-data-tip">
+                    <div class="no-data-img"></div>
+                    <p class="mg-t-10">哎呦，您还没有相关数据哦！请查询</p>
+                </div>
+            </div>
+            <div class="pos-mask"></div>
+        </div>
+    </div>
+
+    <!-- 查询列表设置弹框 -->
+    <div id="setlist-box" style="display:none">
+        <!-- 左边筛选 -->
+        <div class="chose-left">
+            <div>
+                <div class="top_notes">
+                    <input type="checkbox" class="top-check" />
+                    <b>可选全部字段</b>
+                </div>
+                <div class="mb8">
+                    <div class="search-box hs-ui-search clear">
+                        <input type="text" placeholder="请输入列表字段" class="hs-ui-input prop1-input" />
+                        <div class="search-icoBtn">
+                            <i class="icon iconfont icon-search"></i>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <ul class="left-lists">
+
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- 右边已筛选 -->
+        <div class="chosed-right">
+            <ul>
+                <li class="mt8 top_notes">
+                    <div>
+                        <b>已选字段</b>
+                    </div>
+                    <a href="javascript:;" class="old_set ui-textColor">恢复默认</a>
+                </li>
+                <!--   <li class="selects">
+                       <span>前</span>
+                       <select name="" id="">
+                           <option value="10" selected="selected" id="lockings">10</option>
+                           <option value="20">20</option>
+                       </select>
+                       <span>列锁定</span>
+                   </li>-->
+                <li class="lists-box">
+                    <ul class="chosed-lists">
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dialog-btn">
+            <a href="javascript:;" class="hs-ui-btn btn-primary" id="setOutField-sure">确定</a>
+            <a href="javascript:;" class="hs-ui-btn" id="setOutField-cancel">取消</a>
+        </div>
+    </div>
+
+    <!-- 导出弹窗 -->
+    <div class="rate-prop rate-prop3" style="display:none;">
+        <div class="frm-item-panel clear fl rate-slect-box">
+            <div class="fr ">
+                <div class="frm-label fl col-sm-4">导出格式：</div>
+                <div class="frm-content fl col-sm-8">
+                    <select name="exportMode" id="exportMode" class="hs-ui-select">
+                        <option value="0" selected="selected">Excel 2007</option>
+                        <option value="1">Excel 2003</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="dialog-btn">
+            <a href="javascript:;" class="hs-ui-btn btn-primary" id="export-sure">确定</a>
+            <a href="javascript:;" class="hs-ui-btn" onclick="layer.closeAll()">取消</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/template" id="scroll-list-tpl">
+    <div class="cash-item" data-id="{{obj.id}}">
+        <span class="item-label">{{obj.name}}</span>
+        <span class="item-con">{{obj.value}}</span>
+    </div>
+</script>
+
+<script>
+    /*<![CDATA[*/
+    var queryForm;
+
+    $(function() {
+        var contextPath = '/bomp/';
+        var options = {contextPath: contextPath};
+        var $queryForm = $("#queryForm");
+        var $dataList = $("#trade-table");
+        queryForm = $queryForm.webForm(options);
+        var sumFlag = null;   //是否含汇总数据
+        var defaultSum = null;  //汇总数据默认值
+        var inField = [{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'jdbc:base:{dynamicDictionary.selectTAInfoUserSet1}','editable':true,'format':null,'id':4527828,'jdbcKeys':null,'label':'TA','messages':null,'mode':'in','name':'c_tacode','order':0,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'NoBlockSelect','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527829,'jdbcKeys':null,'label':'\u57FA\u91D1\u8D26\u53F7','messages':null,'mode':'in','name':'c_fundacco','order':5,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20027','editable':true,'format':null,'id':4527830,'jdbcKeys':null,'label':'\u8D26\u6237\u72B6\u6001','messages':null,'mode':'in','name':'c_accostatus','order':10,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeDictionarySelect','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527831,'jdbcKeys':null,'label':'\u5BA2\u6237\u540D\u79F0','messages':null,'mode':'in','name':'c_custname','order':15,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527832,'jdbcKeys':null,'label':'\u5BA2\u6237\u540D\u79F0(\u6A21\u7CCA)','messages':null,'mode':'in','name':'c_custnamelike','order':16,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20026','editable':true,'format':null,'id':4527833,'jdbcKeys':null,'label':'\u5BA2\u6237\u7C7B\u578B','messages':null,'mode':'in','name':'c_custtype','order':20,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'DictionarySelect','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'jdbc:base:{dynamicDictionary.selectIdentitypeByCust}','editable':true,'format':null,'id':4527834,'jdbcKeys':null,'label':'\u8BC1\u4EF6\u7C7B\u578B','messages':null,'mode':'in','name':'c_identitype','order':25,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeFilterDictionarySelect','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527835,'jdbcKeys':null,'label':'\u8BC1\u4EF6\u53F7\u7801','messages':null,'mode':'in','name':'c_identityno','order':30,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527836,'jdbcKeys':null,'label':'\u8BC1\u4EF6\u6709\u6548\u65E5\u671F','messages':null,'mode':'in','name':'d_idnovaliddate','order':35,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'DateTimeSectionInput','visible':false,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527837,'jdbcKeys':null,'label':'\u5F00\u6237\u65E5\u671F','messages':null,'mode':'in','name':'d_opendate','order':40,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'DateTimeSectionInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527838,'jdbcKeys':null,'label':'\u6700\u540E\u4FEE\u6539\u65E5\u671F','messages':null,'mode':'in','name':'d_lastmodify','order':45,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'DateTimeSectionInput','visible':false,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527839,'jdbcKeys':null,'label':'\u5BA2\u6237\u7B80\u79F0','messages':null,'mode':'in','name':'c_shortname','order':50,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527840,'jdbcKeys':null,'label':'\u90AE\u653F\u7F16\u7801','messages':null,'mode':'in','name':'c_zipcode','order':55,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527841,'jdbcKeys':null,'label':'\u5BB6\u5EAD\u4F4F\u5740','messages':null,'mode':'in','name':'c_address','order':60,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527842,'jdbcKeys':null,'label':'\u7535\u8BDD\u53F7\u7801','messages':null,'mode':'in','name':'c_phone','order':65,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527843,'jdbcKeys':null,'label':'\u4F20\u771F\u53F7\u7801','messages':null,'mode':'in','name':'c_faxno','order':70,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527844,'jdbcKeys':null,'label':'\u624B\u673A\u53F7\u7801','messages':null,'mode':'in','name':'c_mobileno','order':75,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527845,'jdbcKeys':null,'label':'Email\u5730\u5740','messages':null,'mode':'in','name':'c_email','order':80,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527846,'jdbcKeys':null,'label':'\u5BA2\u6237\u751F\u65E5','messages':null,'mode':'in','name':'c_birthday','order':85,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20028','editable':true,'format':null,'id':4527847,'jdbcKeys':null,'label':'\u5BA2\u6237\u6027\u522B','messages':null,'mode':'in','name':'c_sex','order':90,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeDictionarySelect','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20042','editable':true,'format':null,'id':4527848,'jdbcKeys':null,'label':'\u804C\u4E1A','messages':null,'mode':'in','name':'c_vocation','order':95,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeDictionarySelect','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20037','editable':true,'format':null,'id':4527849,'jdbcKeys':null,'label':'\u5B66\u5386','messages':null,'mode':'in','name':'c_education','order':100,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeDictionarySelect','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527850,'jdbcKeys':null,'label':'\u5E74\u6536\u5165','messages':null,'mode':'in','name':'c_annualearnings','order':105,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527851,'jdbcKeys':null,'label':'\u5DE5\u4F5C\u5355\u4F4D\u540D\u79F0','messages':null,'mode':'in','name':'c_corpname','order':110,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527852,'jdbcKeys':null,'label':'\u5DE5\u4F5C\u5355\u4F4D\u7535\u8BDD','messages':null,'mode':'in','name':'c_corptel','order':115,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527853,'jdbcKeys':null,'label':'\u7ECF\u529E\u4EBA\u59D3\u540D','messages':null,'mode':'in','name':'c_contact','order':120,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20022','editable':true,'format':null,'id':4527854,'jdbcKeys':null,'label':'\u7ECF\u529E\u4EBA\u8BC1\u4EF6\u7C7B\u578B','messages':null,'mode':'in','name':'c_contype','order':125,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeDictionarySelect','visible':false,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527855,'jdbcKeys':null,'label':'\u7ECF\u529E\u4EBA\u8BC1\u4EF6\u53F7\u7801','messages':null,'mode':'in','name':'c_contno','order':130,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20029','editable':true,'format':null,'id':4527856,'jdbcKeys':null,'label':'\u5BF9\u8D26\u5355\u5BC4\u9001\u65B9\u5F0F','messages':null,'mode':'in','name':'c_billsendflag','order':135,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeDictionarySelect','visible':false,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20030','editable':true,'format':null,'id':4527857,'jdbcKeys':null,'label':'\u5BF9\u8D26\u5355\u5BC4\u9001\u9014\u5F84','messages':null,'mode':'in','name':'c_billsendpass','order':140,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeDictionarySelect','visible':false,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20080','editable':true,'format':null,'id':4527858,'jdbcKeys':null,'label':'\u5F00\u901ACallCenter\u6807\u5FD7','messages':null,'mode':'in','name':'c_callcenter','order':145,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeDictionarySelect','visible':false,'width':200},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20080','editable':true,'format':null,'id':4527859,'jdbcKeys':null,'label':'\u5F00\u901A\u7F51\u4E0A\u4EA4\u6613\u6807\u5FD7','messages':null,'mode':'in','name':'c_internet','order':150,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeDictionarySelect','visible':false,'width':200},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527860,'jdbcKeys':null,'label':'\u56FD\u7C4D','messages':null,'mode':'in','name':'c_nationality','order':155,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527861,'jdbcKeys':null,'label':'\u6CD5\u4EBA\u59D3\u540D','messages':null,'mode':'in','name':'c_lawname','order':160,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20022','editable':true,'format':null,'id':4527862,'jdbcKeys':null,'label':'\u6CD5\u4EBA\u8BC1\u4EF6\u7C7B\u578B','messages':null,'mode':'in','name':'c_lawidtype','order':165,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeDictionarySelect','visible':false,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527863,'jdbcKeys':null,'label':'\u6CD5\u4EBA\u8BC1\u4EF6\u53F7\u7801','messages':null,'mode':'in','name':'c_lawidno','order':170,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527864,'jdbcKeys':null,'label':'\u7ECF\u7EAA\u4EBA','messages':null,'mode':'in','name':'c_broker','order':175,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20031','editable':true,'format':null,'id':4527865,'jdbcKeys':null,'label':'\u63A8\u8350\u4EBA\u7C7B\u578B','messages':null,'mode':'in','name':'c_recommendertype','order':180,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeDictionarySelect','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527866,'jdbcKeys':null,'label':'\u63A8\u8350\u4EBA','messages':null,'mode':'in','name':'c_recommender','order':185,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'jdbc:base:{dynamicDictionary.selectCityNo}','editable':true,'format':null,'id':4527867,'jdbcKeys':null,'label':'\u57CE\u5E02\u7F16\u53F7','messages':null,'mode':'in','name':'c_cityno','order':190,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeDictionarySelect','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527868,'jdbcKeys':null,'label':'\u7279\u6B8A\u4EE3\u7801','messages':null,'mode':'in','name':'c_actcode','order':195,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527869,'jdbcKeys':null,'label':'\u9000\u4FE1\u539F\u56E0','messages':null,'mode':'in','name':'c_backreason','order':200,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527782,'jdbcKeys':null,'label':'\u57FA\u91D1\u8D26\u6237\u5361\u7684\u51ED\u8BC1\u53F7','messages':null,'mode':'in','name':'c_accountcardid','order':205,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'jdbc:base:{dynamicDictionary.selectInstiByCust}','editable':true,'format':null,'id':4527870,'jdbcKeys':null,'label':'\u673A\u6784\u7C7B\u578B','messages':null,'mode':'in','name':'c_institutiontype','order':210,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'MultipeFilterDictionarySelect','visible':false,'width':100},{'category':'hidden','conditionMap':null,'defaultValue':null,'dictName':'control_selectTAparamByTA','editable':false,'format':null,'id':4527871,'jdbcKeys':null,'label':'\u65B0400\u63A5\u53E3\u53C2\u6570','messages':null,'mode':'in','name':'TA400param','order':215,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'TextInput','visible':false,'width':150}];
+        var outField = [{'category':null,'conditionMap':null,'defaultValue':'detail=\u8BE6\u60C5','dictName':null,'editable':false,'format':null,'id':4527783,'jdbcKeys':null,'label':'\u64CD\u4F5C','messages':null,'mode':'out','name':'#','order':0,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'action','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':false,'format':null,'id':4527784,'jdbcKeys':null,'label':'TA','messages':null,'mode':'out','name':'c_tacode','order':5,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':false,'format':null,'id':4527785,'jdbcKeys':null,'label':'\u57FA\u91D1\u8D26\u53F7','messages':null,'mode':'out','name':'c_fundacco','order':10,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20027','editable':true,'format':null,'id':4527786,'jdbcKeys':null,'label':'\u8D26\u6237\u72B6\u6001','messages':null,'mode':'out','name':'c_accostatus','order':15,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527787,'jdbcKeys':null,'label':'\u5BA2\u6237\u540D\u79F0','messages':null,'mode':'out','name':'c_custname','order':20,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20026','editable':true,'format':null,'id':4527788,'jdbcKeys':null,'label':'\u5BA2\u6237\u7C7B\u578B','messages':null,'mode':'out','name':'c_custtype','order':25,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':'disabled','conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527789,'jdbcKeys':null,'label':'\u539F\u5BA2\u6237\u7C7B\u578B','messages':null,'mode':'out','name':'old_c_custtype','order':30,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'field:old_c_custtype:{\"0\":\"C20023\",\"1\":\"C20022\",\"2\":\"C20379\"}','editable':true,'format':null,'id':4527790,'jdbcKeys':null,'label':'\u8BC1\u4EF6\u7C7B\u578B','messages':null,'mode':'out','name':'c_identitype','order':35,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527791,'jdbcKeys':null,'label':'\u8BC1\u4EF6\u53F7\u7801','messages':null,'mode':'out','name':'c_identityno','order':40,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':'yyyy-MM-dd','id':4527792,'jdbcKeys':null,'label':'\u8BC1\u4EF6\u6709\u6548\u65E5\u671F','messages':null,'mode':'out','name':'d_idnovaliddate','order':45,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':'yyyy-MM-dd','id':4527793,'jdbcKeys':null,'label':'\u5F00\u6237\u65E5\u671F','messages':null,'mode':'out','name':'d_opendate','order':50,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':'yyyy-MM-dd','id':4527794,'jdbcKeys':null,'label':'\u6700\u540E\u4FEE\u6539\u65E5\u671F','messages':null,'mode':'out','name':'d_lastmodify','order':55,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527795,'jdbcKeys':null,'label':'\u5BA2\u6237\u7B80\u79F0','messages':null,'mode':'out','name':'c_shortname','order':60,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527796,'jdbcKeys':null,'label':'\u90AE\u653F\u7F16\u7801','messages':null,'mode':'out','name':'c_zipcode','order':65,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527797,'jdbcKeys':null,'label':'\u5BB6\u5EAD\u4F4F\u5740','messages':null,'mode':'out','name':'c_address','order':70,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527798,'jdbcKeys':null,'label':'\u7535\u8BDD\u53F7\u7801','messages':null,'mode':'out','name':'c_phone','order':75,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527799,'jdbcKeys':null,'label':'\u4F20\u771F\u53F7\u7801','messages':null,'mode':'out','name':'c_faxno','order':80,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527800,'jdbcKeys':null,'label':'\u624B\u673A\u53F7\u7801','messages':null,'mode':'out','name':'c_mobileno','order':85,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527801,'jdbcKeys':null,'label':'Email\u5730\u5740','messages':null,'mode':'out','name':'c_email','order':90,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527802,'jdbcKeys':null,'label':'\u5BA2\u6237\u751F\u65E5','messages':null,'mode':'out','name':'c_birthday','order':95,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20028','editable':true,'format':null,'id':4527803,'jdbcKeys':null,'label':'\u5BA2\u6237\u6027\u522B','messages':null,'mode':'out','name':'c_sex','order':100,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20042','editable':true,'format':null,'id':4527804,'jdbcKeys':null,'label':'\u804C\u4E1A','messages':null,'mode':'out','name':'c_vocation','order':105,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20037','editable':true,'format':null,'id':4527805,'jdbcKeys':null,'label':'\u5B66\u5386','messages':null,'mode':'out','name':'c_education','order':110,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527806,'jdbcKeys':null,'label':'\u5E74\u6536\u5165','messages':null,'mode':'out','name':'c_annualearnings','order':115,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527807,'jdbcKeys':null,'label':'\u5DE5\u4F5C\u5355\u4F4D\u540D\u79F0','messages':null,'mode':'out','name':'c_corpname','order':120,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527808,'jdbcKeys':null,'label':'\u5DE5\u4F5C\u5355\u4F4D\u7535\u8BDD','messages':null,'mode':'out','name':'c_corptel','order':125,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527809,'jdbcKeys':null,'label':'\u7ECF\u529E\u4EBA\u59D3\u540D','messages':null,'mode':'out','name':'c_contact','order':130,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20022','editable':true,'format':null,'id':4527810,'jdbcKeys':null,'label':'\u7ECF\u529E\u4EBA\u8BC1\u4EF6\u7C7B\u578B','messages':null,'mode':'out','name':'c_contype','order':135,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527811,'jdbcKeys':null,'label':'\u7ECF\u529E\u4EBA\u8BC1\u4EF6\u53F7\u7801','messages':null,'mode':'out','name':'c_contno','order':140,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20029','editable':true,'format':null,'id':4527812,'jdbcKeys':null,'label':'\u5BF9\u8D26\u5355\u5BC4\u9001\u65B9\u5F0F','messages':null,'mode':'out','name':'c_billsendflag','order':145,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20030','editable':true,'format':null,'id':4527813,'jdbcKeys':null,'label':'\u5BF9\u8D26\u5355\u5BC4\u9001\u9014\u5F84','messages':null,'mode':'out','name':'c_billsendpass','order':150,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20080','editable':true,'format':null,'id':4527814,'jdbcKeys':null,'label':'\u5F00\u901ACallCenter\u6807\u5FD7','messages':null,'mode':'out','name':'c_callcenter','order':155,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':200},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20080','editable':true,'format':null,'id':4527815,'jdbcKeys':null,'label':'\u5F00\u901A\u7F51\u4E0A\u4EA4\u6613\u6807\u5FD7','messages':null,'mode':'out','name':'c_internet','order':160,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':200},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527816,'jdbcKeys':null,'label':'\u56FD\u7C4D','messages':null,'mode':'out','name':'c_nationality','order':165,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527817,'jdbcKeys':null,'label':'\u6CD5\u4EBA\u59D3\u540D','messages':null,'mode':'out','name':'c_lawname','order':170,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20022','editable':true,'format':null,'id':4527818,'jdbcKeys':null,'label':'\u6CD5\u4EBA\u8BC1\u4EF6\u7C7B\u578B','messages':null,'mode':'out','name':'c_lawidtype','order':175,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527819,'jdbcKeys':null,'label':'\u6CD5\u4EBA\u8BC1\u4EF6\u53F7\u7801','messages':null,'mode':'out','name':'c_lawidno','order':180,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527820,'jdbcKeys':null,'label':'\u7ECF\u7EAA\u4EBA','messages':null,'mode':'out','name':'c_broker','order':185,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20031','editable':true,'format':null,'id':4527821,'jdbcKeys':null,'label':'\u63A8\u8350\u4EBA\u7C7B\u578B','messages':null,'mode':'out','name':'c_recommendertype','order':190,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527822,'jdbcKeys':null,'label':'\u63A8\u8350\u4EBA','messages':null,'mode':'out','name':'c_recommender','order':195,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527823,'jdbcKeys':null,'label':'\u57CE\u5E02\u7F16\u53F7','messages':null,'mode':'out','name':'c_cityno','order':200,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527824,'jdbcKeys':null,'label':'\u7279\u6B8A\u4EE3\u7801','messages':null,'mode':'out','name':'c_actcode','order':205,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527825,'jdbcKeys':null,'label':'\u9000\u4FE1\u539F\u56E0','messages':null,'mode':'out','name':'c_backreason','order':210,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527781,'jdbcKeys':null,'label':'\u57FA\u91D1\u8D26\u6237\u5361\u7684\u51ED\u8BC1\u53F7','messages':null,'mode':'out','name':'c_accountcardid','order':215,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':130},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'field:institutiondictname:{\"C20053\":\"C20053\",\"C20444\":\"C20444\",\"C20445\":\"C20445\",\"C20446\":\"C20446\"}','editable':true,'format':null,'id':4527826,'jdbcKeys':null,'label':'\u673A\u6784\u7C7B\u578B','messages':null,'mode':'out','name':'c_institutiontype','order':220,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':130},{'category':'disabled','conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527827,'jdbcKeys':null,'label':'\u673A\u6784\u6570\u636E\u5B57\u5178','messages':null,'mode':'out','name':'institutiondictname','order':225,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':false,'width':150}];
+        var showConfigCode = 'query_accountInfoQuery';
+        var showConfigFieldUserTemps = [];   //常用搜索
+        var datalen = 0; // 查询结果数据条数
+
+        var noBlockSelect = $queryForm.find("*[ui-type='NoBlockSelect']");
+        noBlockSelect.each(function () {
+            var $ui = $(this);
+            var uiName = $ui.attr("ui-name");
+            if ($ui) {
+                var uiValue = $ui.val();
+                if (uiValue == null) {
+                    uiValue = $ui.find("option:first").val();
+                }
+
+                queryForm.setValue(uiName, uiValue);
+                var event = {
+                    name: "selectChange",
+                    data: {
+                        label: "",
+                        value: uiValue
+                    }
+                };
+                queryForm.triggerEvent(uiName, event);
+            }
+        });
+
+        var multipeDictionarySelect = $queryForm.find("*[ui-type='MultipeDictionarySelect']");
+        multipeDictionarySelect.each(function () {
+            var $ui = $(this);
+            var uiName = $ui.attr("ui-name");
+            if ($ui) {
+                var uiValue = $ui.val();
+                if (uiValue != null) {
+                    queryForm.setValue(uiName, uiValue);
+                }
+
+                var event = {
+                    name: "selectChange",
+                    data: {
+                        label: "",
+                        value: uiValue
+                    }
+                };
+                queryForm.triggerEvent(uiName, event);
+            }
+        });
+
+        var filterNoDftDictionarySelect = $queryForm.find("*[ui-type='FilterNoDftDictionarySelect']");
+        filterNoDftDictionarySelect.each(function () {
+            var $ui = $(this);
+            var uiName = $ui.attr("ui-name");
+            if ($ui) {
+                var uiValue = $ui.val();
+                if (uiValue == null) {
+                    uiValue = $ui.find("option:first").val();
+                }
+
+                queryForm.setValue(uiName, uiValue);
+                var event = {
+                    name: "selectChange",
+                    data: {
+                        label: "",
+                        value: uiValue
+                    }
+                };
+                queryForm.triggerEvent(uiName, event);
+            }
+        });
+
+        /* 1、查询条件显示 start */
+        var conditionForm = {
+            obj:{
+                arrData:[]// 查询条件显隐数组
+            },
+            init:function(){
+                var columns = getNewInColumns();
+                this.setList(columns);
+                sessionStorage.setItem('arrData', JSON.stringify(this.arrData));
+                reloadTop();
+            },
+            // 设置arrData
+            setList:function(columns){
+                var _this = this;
+                _this.arrData = [];
+                var arr;
+                for(var i in columns){
+                    arr = {};
+                    arr["name"] =  columns[i].title;
+                    arr["ischeck"] =  columns[i].select==1;
+                    arr["id"] = columns[i].id;
+                    arr["order"] = columns[i].order;
+                    arr["disabled"] = columns[i].disabled;
+                    _this.arrData.push(arr);
+                }
+            }
+        };
+        conditionForm.init();
+        /* 1、查询条件显示 end */
+
+        var $inputSelectlists = $(".input-select-con"),
+            $frmSelectlists = $(".frm-select-lists"),
+            $frmStatuslists = $(".frm-status-lists");
+
+        /* 2、按钮事件 start */
+        var maskLeft = 0; //缓存遮罩层left 偏移量
+        var searchForm = {
+            obj:{
+                $commonWordlist:$(".js-common-word"),
+                $dhSearchPanel:$(".dh-search-panel")
+            },
+            init:function(){
+                this.rendtable();
+                this.setUserTemp();
+                this.slideList();
+                this.event();
+                rendercommonword();
+            },
+            // 加载查询数据
+            rendtable:function(){
+                var that = this;
+                //使用easyui grid控件
+                using('datagrid', function(){
+                    var grid=$('#trade-table').datagrid({
+                        width:'auto',
+                        height:'auto',
+                        pagination:true,
+                        loadMsg:"数据处理中...",
+                        striped:true,
+                        dataType: 'json',
+                        nowrap:false,
+                        pageSize:10,
+                        /*url: /!*'/bomp/tabusiness/query/loadData.json?showConfigPrefix=query_accountInfo'*!/"",//数据源，生产环境请替换*/
+                        onLoadSuccess: function(data){
+                            datalen = data.total;
+                            resizeGrid();
+
+                            if(!data.rows.length){
+                                $(".data-table-loading").show();
+                            }else{
+                                $(".data-table-loading").hide();
+                            }
+                            // 上面的页码暂时隐藏
+//                            if($(".hs-ui-middle-title .top-pagination .pagination").length) return;
+//                            $(".hs-ui-middle-title .top-pagination").append($(".datagrid-pager").clone(true));
+                        },
+                        onLoadError:function(){
+                            layer.msg('请求失败，请重试',{time:1000});
+                        },
+                        onBeforeLoad: function (param) {
+                            var queryParams = queryForm.getValues();
+                            var newParams = filterParam4Query(param);
+                            $.extend(param, {params: newParams});
+                        },
+                        onDblClickRow: function (row, param) {
+                            openDetailWindow(param, 'detail');
+                        },
+                        columns: columnsData,
+                        frozenColumns: frozenColumnData,
+                        frozenColumnsLeft: leftColumnData
+                    });
+
+                    var pager =grid.datagrid('getPager');
+                    pager.pagination({layout:['first','prev','manual','next','last','list'],
+                        beforePageText: '第',
+                        afterPageText: '页 共 {pages} 页',
+                        displayMsg: '共{total}条数据'
+                    });
+
+                    $(window).resize(function(){
+                        grid.datagrid('resize');
+                        fixedBottomScroll();
+                    });
+
+                    window.grid= grid;
+
+                    var tableArr = [],selectedDhList=[];
+                    function setDhlists(){
+                        $(".datagrid-header-row td").each(function(){
+                            tableArr.push({name:$(this).text(),field:$(this).attr("field")})
+                        })
+                    }
+                    setDhlists();
+
+                    //因列表过长，需将横向滑动固定底部
+                    var $datagridHeader2 = $(".hs-ui-table .datagrid-view2"),
+                        $datagridHeader0 = $(".hs-ui-table .datagrid-view0"),
+                        $datagridHeaderInner2 = $datagridHeader2.find(".datagrid-header-inner"),
+                        $datagridHeaderInner0 = $datagridHeader0.find(".datagrid-header-inner");
+
+                    function scrollResize(){
+                        var scrollTop=$(window).scrollTop(),
+                            offsetTop = $(".hs-ui-middle-content").offset().top,
+                            datagridHeaderWidth2 = $datagridHeader2.width(),
+                            datagridHeaderWidth0 = $datagridHeader0.width();
+
+                        if(scrollTop > offsetTop){
+                            $(".hs-title-title-txt").addClass("fixed");
+                            $datagridHeaderInner2.addClass("fixed2").css("left",datagridHeaderWidth0).width(datagridHeaderWidth2);
+                            $datagridHeaderInner0.addClass("fixed0").width(datagridHeaderWidth0);
+                        }else{
+                            $(".hs-title-title-txt").removeClass("fixed");
+                            $datagridHeaderInner2.removeClass("fixed2");
+                            $datagridHeaderInner0.removeClass("fixed0");
+                        }
+
+                        fixedBottomScroll(scrollTop);
+                    }
+
+                    // 显示底部滚动条
+                    function fixedBottomScroll(scrolltop){
+                        var winHeight=$(window).height(),
+                            docHeight=$(document).height(),
+                            scrollitemWidth = $datagridHeader2.find("table").width()+$datagridHeader0.width();
+                        var scrollTop = scrolltop?scrolltop:$(window).scrollTop();
+
+                        if(scrollTop < docHeight - winHeight-50 && scrollTop > $(".hs-ui-table").offset().top - winHeight +30){
+                            $(".m-scroll").show().find(".m-scroll-item").css("width",scrollitemWidth);
+                        }else{
+                            $(".m-scroll").hide();
+                        }
+                    }
+
+                    // 结果列搜索框
+                    $('#datagrid-table-search').keyup(function(e){
+                        var inputVal= $(this).val().replace(" ",""),
+                            lihtml="";
+                        if(inputVal){
+                            $.each(tableArr,function(i,v){
+                                if(v.name.indexOf(inputVal) >= 0){
+                                    selectedDhList.push({index:i,name:v.name});
+                                    lihtml += '<li data-index="'+i+'" data-field="'+v.field+'">'+v.name+'</li>';
+                                }
+                            });
+
+                            if(!selectedDhList.length) lihtml='<li data-index="-1">没有相关列表</li>';
+                            $(".dh-search-lists").show().find("ul").empty().append(lihtml);
+                        }else{
+                            selectedDhList=[];
+                            $(".dh-search-lists").hide().find("ul").empty();
+                            $(".pos-mask").hide()
+                        }
+                    });
+                    var offsetTop = $(".hs-ui-middle-content").offset().top,
+                        $datagridHeaderInner = $(".hs-ui-table .datagrid-view2 .datagrid-header-inner");
+
+                    $(window).scroll(function(){
+                        scrollResize();
+                    }).resize(function(){
+                        scrollResize();
+                    });
+
+                    // 滚动条事件
+                    $(".m-scroll,.datagrid-view2 .datagrid-body").on("scroll",function(){
+                        var scrollLeft=$(this).scrollLeft();
+                        $(".datagrid-view2 .datagrid-body").scrollLeft(scrollLeft);
+                        $datagridHeaderInner2.scrollLeft(scrollLeft);
+                        if($(".pos-mask").is(":visible")) $(".pos-mask").css("left",maskLeft-scrollLeft)
+                    });
+
+                });
+            },
+            /* doSearch:function(val){
+             $('#trade-table').datagrid('load',{
+             itemid: val
+             });
+             },*/
+            clearItem:function(itemId){
+                $inputSelectlists.find("li[data-item='"+itemId+"']").remove();
+                $frmSelectlists.find("li[data-item='"+itemId+"']").remove();
+                $frmSelectlists.find(".has-selected").text($frmSelectlists.find("li").length);
+
+                $frmStatuslists.find("label[data-id='"+itemId+"'] input").prop("checked",false);
+                if(!$inputSelectlists.find("li").length) $inputSelectlists.append(nodataHtml);
+            },
+            clearAll:function(){
+                $frmStatuslists.find("label input").prop("checked",false);
+                $inputSelectlists.empty().append(nodataHtml);
+                $(".frm-select-con ul").empty();
+            },
+            commonAjax:function(url,callback){
+                $.ajax({
+                    url: url,
+                    type: "get",
+                    dataType: "json",
+                    beforeSend: function() {},
+                    success: function(datas) {
+                        if(callback) callback(datas);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            },
+            slideList:function(){
+                $(".slideList").slide({
+                    titCell:".hd ul",
+                    mainCell:".bd ul",
+                    autoPage:true,
+                    effect:"left",
+                    scroll:1,
+                    vis:6,
+                    pnLoop:false
+                });
+            },
+            initLoadMore:function(options) {
+                var _this= this;
+                var page = 1; //默认页数
+                var initLoadMore_isLoading=false;
+                //默认数据
+                var defautls = {
+                        debug: false,
+                        url: "",
+                        targetSelector: "",
+                        data: {
+                            p: page //页数
+                        },
+                        scrollTopDiff:0,//滚动加载触发距离
+                        callback: null //回调函数
+                    },
+                    opts = $.extend(true, {}, defautls, options); //合并参数
+
+                $(opts.targetSelector).scroll(function(){
+                    if(initLoadMore_isLoading) return;
+
+                    var check=$(this).scrollTop()>=$(this).find('li').outerHeight()*$(this).find('li').length-$(this).outerHeight()-parseInt(opts.scrollTopDiff)?true:false;
+
+                    if(check){
+                        opts.data.p = page = parseInt(page) + 1;
+
+                        $.ajax({
+                            url: opts.url+'?page='+opts.data.p,
+                            type: "get",
+                            dataType: "json",
+                            beforeSend: function() {
+                                initLoadMore_isLoading=true;
+                            },
+                            success: function(item) {
+                                if (item.option.length) {
+                                    var html="";
+                                    $.each(item.option,function(i,v){
+                                        html += '<li class="active-result" data-option-array-index="'+v.id+'" style="">'+v.name+'</li>';
+                                    });
+
+                                    $render=$(html);
+                                    $(opts.targetSelector).append($render);
+
+                                    initLoadMore_isLoading=false;
+                                } else {
+                                    if (opts.callback) opts.callback($render);
+                                }
+                                if (opts.callback) opts.callback($render);
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            }
+                        });
+                        return false;
+                    }
+                });
+            },
+            posMask:function(itemfield){
+                var tdItem = $(".datagrid-view .datagrid-header-row td[field='"+itemfield+"']"),
+                    tdItemLeft = tdItem.offset().left,
+                    tdItemWidth = tdItem.width(),
+                    tableWidth = $(".hs-ui-table").width(),
+                    scrollLeft = tdItemLeft+tdItemWidth - tableWidth > 0 ? tdItemLeft+tdItemWidth - tableWidth:0;
+                maskLeft = tdItemLeft;
+
+                $(".datagrid-view2 .datagrid-body").scrollLeft(scrollLeft);
+                $(".pos-mask").show().css({
+                    left:tdItemLeft,
+                    width:tdItemWidth
+                })
+            },
+            event:function(){
+                var _this=this;
+
+                // 查询
+                $(".js-checked-btn").on("click",function() {
+                    // 查询数据，查询汇总需要依赖数据条数，改成同步
+                    loadData(0);
+
+                    // 查询汇总
+                    if(sumFlag){
+                        loadSum(0);
+                    }
+                });
+
+                // 搜索结果列名称
+                _this.obj.$dhSearchPanel.on("click",".dh-search-lists li",function(){
+                    var field = $(this).data("field");
+                    _this.posMask(field);
+                });
+
+                $(document).click(function(){
+                    _this.obj.$dhSearchPanel.find(".dh-search-lists").hide();
+                });
+
+                /* 下拉筛选 start */
+                $(".js-multi-selection").click(function(event){
+                    event.stopPropagation();
+                    var $this = $(this),
+                        $statusListsBox = $this.siblings(".frm-status-lists");
+
+                    $statusListsBox.removeClass("none");
+                    $frmSelectlists.addClass("none");
+                });
+
+                $(".js-multi-selection").mouseenter(function(){
+                    if($inputSelectlists.find("li").length==1 || !$frmStatuslists.hasClass("none") ) return;
+                    $frmSelectlists.removeClass("none");
+                });
+
+                $(".js-hover-panel").mouseleave(function(){
+                    $frmSelectlists.addClass("none");
+                });
+
+                $(".frm-status-lists").on("change","input[type='checkbox']",function(event){
+                    event.stopPropagation();
+                    var $this = $(this),
+                        oparent = $this.parent(),
+                        id=oparent.data("id"),
+                        name = $this.siblings().html(),
+                        checked = $this.is(":checked"),
+                        itemHtml = '<li class="search-choice clear" data-item="'+id+'"><span class="fl">'+name+'</span><i class="icon iconfont icon-guanbi fr mg-l-5 js-close-btn"></i></li>';
+                    $frmStatuslists.removeClass("none");
+
+                    if(checked){
+                        $inputSelectlists.find(".search-field").before(itemHtml).width(50).find("input").focus();
+                        $frmSelectlists.find("ul").append(itemHtml);
+                        $frmSelectlists.find(".has-selected").text($frmSelectlists.find("li").length);
+                    }else{
+                        $inputSelectlists.find("li[data-item='"+id+"']").remove();
+                        $frmSelectlists.find("li[data-item='"+id+"']").remove();
+                        $frmSelectlists.find(".has-selected").text($frmSelectlists.find("li").length);
+                        if($inputSelectlists.find("li").length==1) {
+                            $inputSelectlists.find(".search-field").css('width','100%')
+                        }
+                    }
+
+                });
+
+                $(".js-multi-selection,.frm-select-lists").on("click",".js-close-btn",function(event){
+                    event.stopPropagation();
+                    var oparent = $(this).parents("li"),
+                        itemId = oparent.data("item");
+
+                    _this.clearItem(itemId);
+                });
+
+                $(".js-multi-selection,.frm-select-lists").on("click",".cancel-all-btn",function(event){
+                    event.stopPropagation();
+                    _this.clearAll();
+                });
+
+                _this.obj.$commonWordlist.on("click", "li", function(){
+                    var queryTempId=$(this).attr("queryTempId");
+                    queryTempId = (queryTempId === undefined)?0:queryTempId;
+
+                    $(this).addClass("active").siblings().removeClass("active");
+
+                    // 查询条件重置
+                    $(".js-reset-btn").click();
+
+                    // 查询数据
+                    loadData(queryTempId);
+
+                    //查询汇总数据
+                    if(sumFlag){
+                        loadSum(queryTempId);
+                    }
+                });
+
+                // 删除常用搜索
+                _this.obj.$commonWordlist.on("click",".icon",function(event){
+                    event.stopPropagation();
+                    var $this = $(this);
+                    var queryTempId = $this.parents("li").attr("queryTempId");
+                    var params = {queryTempId:queryTempId};
+
+                    $.ajaxSetup({contentType: "application/json; charset=utf-8"});
+                    var actionUrl = '/bomp/tabusiness/query/deleteQueryTemplate.do';
+                    $.post(actionUrl, JSON.stringify(params), function (response) {
+                        if (response.hasOwnProperty("error_info")) {
+                            var message = "移除失败:[" + response.error_info + "]";
+                            layer.msg(message);
+                        }else{
+                            $this.parents("li").remove();
+                            if(_this.obj.$commonWordlist.find("li").length ==1) $(".type-item-panel").hide();
+                        }
+                    });
+                });
+
+                $inputSelectlists.on("keyup",".search-field input",function(){
+                    var len = $(this).val().length;
+                    var sum = 60+ len*8;
+                    sum = sum > $inputSelectlists.width()?$inputSelectlists.width():sum;
+
+                    $inputSelectlists.find(".search-field").width(sum);
+
+                    var val = $(this).val();
+                    _this.commonAjax("data-select.json",function(res){
+                        var optionHtml ="";
+                        $.each(res.option,function(index,value){
+                            optionHtml +='<div class="frm-status-item">'+
+                                '<label data-id="'+index+'">'+
+                                '<input type="checkbox" name="" class="checkbox-item" />'+
+                                '<span class="name-item">'+value.code+':'+value.name+'</span>'+
+                                '</label>'+
+                                '</div>';
+                        });
+
+                        $frmStatuslists.find("dd").html(optionHtml);
+                    })
+
+                });
+
+                /* 下拉筛选 end */
+
+
+                $(".js-export-panel").hover(function(){
+                    $(this).find(".child-ul").show();
+                },function(){
+                    $(this).find(".child-ul").hide();
+                });
+            },
+            // 查询结果列设置后重置列名
+            resetList:function(){
+                var opts = $('#trade-table').datagrid('options');
+                var responseNewColumns = getNewColumns();
+                opts.columns = [responseNewColumns];
+                $("#trade-table").datagrid(opts);
+                var pager = $("#trade-table").datagrid('getPager');
+                pager.pagination({
+                    layout: ['first', 'prev', 'manual', 'next', 'last', 'list'],
+                    beforePageText: '第',
+                    afterPageText: '页 共 {pages} 页',
+                    displayMsg: '共{total}条数据'
+                });
+//                $("#trade-table").datagrid("reload", {});
+            },
+            // 初始化控制常用搜索区显隐
+            setUserTemp:function(){
+                if(showConfigFieldUserTemps.length > 0){
+                    $(".type-item-panel").show();
+                }
+            },
+            // 详情页面关联查询
+            linkedQuery:function(){
+                var linkQueryCondition = sessionStorage.getItem('linkQueryCondition');
+                if(!!linkQueryCondition){
+                    // 关联查询
+                    var condition = JSON.parse(linkQueryCondition);
+                    // 初始化
+                    sessionStorage.removeItem('linkQueryCondition');
+
+//                    for(var k in condition){
+//                        queryForm.setValue(k, condition[k]);
+//                    }
+
+                    // 触发查询（todo loadData中获取调用dataGrid报错，因为dataGird定义顺序在调用之后，待排查）
+//                    $(".js-checked-btn").click();
+                }
+            }
+        };
+        searchForm.init();
+        /* 2、按钮事件 end*/
+
+        // 重置
+        $(".js-reset-btn").on("click", function () {
+
+            for (var i in queryForm.getNames()) {
+                var name = queryForm.getNames()[i];
+                var uiControl = $("#queryForm").find("*[ui-name='" + name + "']");
+                var isDisabled = uiControl.attr("disabled");
+                if (!isDisabled) {
+                    //对NoBlockSelect特殊处理，置空后跳转到第一项
+                    if (uiControl.attr("ui-type") == "NoBlockSelect" || uiControl.attr("ui-type") == "DictionarySelect") {
+                        var uiValue = uiControl.find("option:first-child").val();
+                        queryForm.setValue(name, uiValue);
+                        var event = {
+                            name: "selectChange",
+                            data: {
+                                label: "",
+                                value: uiValue
+                            }
+                        };
+                        queryForm.triggerEvent(name, event);
+                        //对DateTimeSectionInput特殊处理
+                    } else if (uiControl.attr("ui-type") == "DateTimeSectionInput") {
+                        var uiValue = uiControl.val();
+                        queryForm.setValue(name, uiValue);
+                    } else if (uiControl.attr("ui-type") == "DateTimeInput") {
+                        var uiValue = uiControl.val();
+                        queryForm.setValue(name, uiValue);
+                    }else if (uiControl.attr("ui-type") == "TextSectionInput") {
+                        uiControl.find('input').each(function(){
+                            $(this).val("");
+                        });
+                        queryForm.setValue(name, "");
+                    } else {
+                        queryForm.setValue(name, "");
+                    }
+                }
+            }
+            var select = $queryForm.find("*[ui-type$='Select']");
+            select.each(function () {
+                if ($(this).hasClass("chosen-select")) {
+                    var isDisabled = $(this).attr("disabled");
+                    if (!isDisabled) {
+//                        $(this).find('option:first-child[value!=""]').prop('selected', true).end().trigger('chosen:updated');
+                        $(this).find('option:first-child[value=""]').prop('selected', false).end().trigger('chosen:updated');
+                    }
+                }
+            });
+            var $DateTimeSectionInput = $queryForm.find("*[ui-type='DateTimeSectionInput']");
+            $DateTimeSectionInput.each(function () {
+                var isDisabled = $(this).attr("disabled");
+                // 日期格式 不带'-'
+                var dateformat = /^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8])))$/;
+
+                if (!isDisabled) {
+                    var date = queryForm.getValue($(this).attr("ui-name"));
+                    if (date.length > 0) {
+                        var i = 0;
+                        for (var j in date) {
+                            i = i + 2;
+                            if (dateformat.test(date[j])) {
+                                $(this).children()[i].value = date[j].substring(0, 4) + "-" + date[j].substring(4, 6) + "-" + date[j].substring(6, 8);
+                            } else {
+                                $(this).children()[i].value = date[j];
+                            }
+                        }
+                    } else {
+                        $(this).children()[0].value = "";
+                        $(this).children()[2].value = "";
+                    }
+                }
+
+            });
+        });
+
+        // 列表数据查询
+        function loadData(queryTempId){
+            var opts = $dataList.datagrid("options");
+            opts.url = '/bomp/tabusiness/query/loadData.json?showConfigPrefix=query_accountInfo';
+            opts.url += "&queryTempId=" + queryTempId;
+            var pager = $dataList.datagrid('getPager');
+            pager.pagination({
+                layout:['first','prev','manual','next','last','list'],
+                beforePageText: '第',
+                afterPageText: '页 共 {pages} 页',
+                displayMsg:'共{total}条数据'
+            });
+
+            $dataList.datagrid('load', queryForm.getValues());
+        }
+
+        // 汇总数据查询
+        function loadSum(queryTempId){
+            var sumUrl = '/bomp/tabusiness/query/loadSum.json?showConfigPrefix=query_accountInfo';
+            sumUrl += "&queryTempId=" + queryTempId;
+            var params;
+
+            if(queryTempId==0){
+                // 按查询条件查询
+                params = getQueryFormValue()
+            }else{
+                // 模版查询
+                params = "";
+            }
+
+            $.ajaxSetup({contentType: "application/json; charset=utf-8"});
+            $.post(sumUrl, JSON.stringify(params), function (data) {
+                if (data.hasOwnProperty("error_info")) {
+                    var message = "查询汇总失败:[" + data.error_info + "]";
+                    layer.msg(message);
+                }else{
+                    // 汇总数据
+                    if(data != null && data != ""){
+                        outFieldSet.showSum(data);
+                    }else{
+                        outFieldSet.setDefaultSum();
+                    }
+
+                    searchForm.slideList();
+                }
+            });
+        }
+
+        // 获取用户查询结果列表字段
+        function getNewColumns() {
+            var columns = [];
+            var outFields = "";
+            var actionUrl = '/bomp/tabusiness/query/getNewOutFields.json?showConfigPrefix=query_accountInfo';
+
+            $.ajaxSetup({contentType: "application/json; charset=utf-8", async: false});
+            $.post(actionUrl, "", function (response) {
+
+                if (response.hasOwnProperty("error_info")) {
+                    message = "处理失败:[" + response.error_info + "]";
+                    layer.msg(message);
+                } else {
+                    outFields = response;
+                }
+            });
+
+            $.ajaxSetup({async: true});
+
+            for (var i in outFields) {
+                var columnMeta = outFields[i];
+                if (columnMeta.name == '#') {
+                    continue;
+                }
+                if (columnMeta.editable == false) {
+                    continue;
+                }
+                var alignType = "left";
+                if (columnMeta.type == "number") {
+                    alignType = "right";
+                }
+                var column = {
+                    id: columnMeta.id,
+                    field: columnMeta.name,
+                    width: columnMeta.width,
+                    title: columnMeta.label,
+                    sortable: columnMeta.orderable,
+                    hidden: !columnMeta.visible,
+                    select: columnMeta.visible ? 1 : 0,
+                    align: alignType,
+                    disabled:columnMeta.category=='disabled'?true:false,
+                    fieldOrder:columnMeta.order
+                };
+                columns.push(column);
+            }
+            return columns;
+
+        }
+
+        // 显示状态样式
+        function formatAction(val,row){
+            var arr = [{"name":"确认失败","clas":"fail-status"},{"name":"确认成功","clas":"success-status"}];
+
+            var html = '<div class="'+arr[val].clas+'">'+arr[val].name+'</div>'
+            return html;
+        }
+
+        //随屏幕变化，重新计算
+        function resizeGrid(){
+            var grid = $(".datagrid-f");
+            if (grid.length) {
+                grid.datagrid('resize');
+            }
+        }
+
+        /* 3、查询结果列表 start */
+        var columnFields;
+        var columnsData = [];
+        var frozenColumnData = [];
+        var leftColumnData = [];
+        var leftColumns = [];
+        var frozenColumns = [];
+        var columns = [];
+        var outFields = [{'category':null,'conditionMap':null,'defaultValue':'detail=\u8BE6\u60C5','dictName':null,'editable':false,'format':null,'id':4527783,'jdbcKeys':null,'label':'\u64CD\u4F5C','messages':null,'mode':'out','name':'#','order':0,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'action','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':false,'format':null,'id':4527784,'jdbcKeys':null,'label':'TA','messages':null,'mode':'out','name':'c_tacode','order':5,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':false,'format':null,'id':4527785,'jdbcKeys':null,'label':'\u57FA\u91D1\u8D26\u53F7','messages':null,'mode':'out','name':'c_fundacco','order':10,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20027','editable':true,'format':null,'id':4527786,'jdbcKeys':null,'label':'\u8D26\u6237\u72B6\u6001','messages':null,'mode':'out','name':'c_accostatus','order':15,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527787,'jdbcKeys':null,'label':'\u5BA2\u6237\u540D\u79F0','messages':null,'mode':'out','name':'c_custname','order':20,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20026','editable':true,'format':null,'id':4527788,'jdbcKeys':null,'label':'\u5BA2\u6237\u7C7B\u578B','messages':null,'mode':'out','name':'c_custtype','order':25,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':'disabled','conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527789,'jdbcKeys':null,'label':'\u539F\u5BA2\u6237\u7C7B\u578B','messages':null,'mode':'out','name':'old_c_custtype','order':30,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':false,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'field:old_c_custtype:{\"0\":\"C20023\",\"1\":\"C20022\",\"2\":\"C20379\"}','editable':true,'format':null,'id':4527790,'jdbcKeys':null,'label':'\u8BC1\u4EF6\u7C7B\u578B','messages':null,'mode':'out','name':'c_identitype','order':35,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527791,'jdbcKeys':null,'label':'\u8BC1\u4EF6\u53F7\u7801','messages':null,'mode':'out','name':'c_identityno','order':40,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':'yyyy-MM-dd','id':4527792,'jdbcKeys':null,'label':'\u8BC1\u4EF6\u6709\u6548\u65E5\u671F','messages':null,'mode':'out','name':'d_idnovaliddate','order':45,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':'yyyy-MM-dd','id':4527793,'jdbcKeys':null,'label':'\u5F00\u6237\u65E5\u671F','messages':null,'mode':'out','name':'d_opendate','order':50,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':'yyyy-MM-dd','id':4527794,'jdbcKeys':null,'label':'\u6700\u540E\u4FEE\u6539\u65E5\u671F','messages':null,'mode':'out','name':'d_lastmodify','order':55,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527795,'jdbcKeys':null,'label':'\u5BA2\u6237\u7B80\u79F0','messages':null,'mode':'out','name':'c_shortname','order':60,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527796,'jdbcKeys':null,'label':'\u90AE\u653F\u7F16\u7801','messages':null,'mode':'out','name':'c_zipcode','order':65,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527797,'jdbcKeys':null,'label':'\u5BB6\u5EAD\u4F4F\u5740','messages':null,'mode':'out','name':'c_address','order':70,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527798,'jdbcKeys':null,'label':'\u7535\u8BDD\u53F7\u7801','messages':null,'mode':'out','name':'c_phone','order':75,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527799,'jdbcKeys':null,'label':'\u4F20\u771F\u53F7\u7801','messages':null,'mode':'out','name':'c_faxno','order':80,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527800,'jdbcKeys':null,'label':'\u624B\u673A\u53F7\u7801','messages':null,'mode':'out','name':'c_mobileno','order':85,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527801,'jdbcKeys':null,'label':'Email\u5730\u5740','messages':null,'mode':'out','name':'c_email','order':90,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527802,'jdbcKeys':null,'label':'\u5BA2\u6237\u751F\u65E5','messages':null,'mode':'out','name':'c_birthday','order':95,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20028','editable':true,'format':null,'id':4527803,'jdbcKeys':null,'label':'\u5BA2\u6237\u6027\u522B','messages':null,'mode':'out','name':'c_sex','order':100,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20042','editable':true,'format':null,'id':4527804,'jdbcKeys':null,'label':'\u804C\u4E1A','messages':null,'mode':'out','name':'c_vocation','order':105,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20037','editable':true,'format':null,'id':4527805,'jdbcKeys':null,'label':'\u5B66\u5386','messages':null,'mode':'out','name':'c_education','order':110,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527806,'jdbcKeys':null,'label':'\u5E74\u6536\u5165','messages':null,'mode':'out','name':'c_annualearnings','order':115,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527807,'jdbcKeys':null,'label':'\u5DE5\u4F5C\u5355\u4F4D\u540D\u79F0','messages':null,'mode':'out','name':'c_corpname','order':120,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527808,'jdbcKeys':null,'label':'\u5DE5\u4F5C\u5355\u4F4D\u7535\u8BDD','messages':null,'mode':'out','name':'c_corptel','order':125,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527809,'jdbcKeys':null,'label':'\u7ECF\u529E\u4EBA\u59D3\u540D','messages':null,'mode':'out','name':'c_contact','order':130,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20022','editable':true,'format':null,'id':4527810,'jdbcKeys':null,'label':'\u7ECF\u529E\u4EBA\u8BC1\u4EF6\u7C7B\u578B','messages':null,'mode':'out','name':'c_contype','order':135,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527811,'jdbcKeys':null,'label':'\u7ECF\u529E\u4EBA\u8BC1\u4EF6\u53F7\u7801','messages':null,'mode':'out','name':'c_contno','order':140,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20029','editable':true,'format':null,'id':4527812,'jdbcKeys':null,'label':'\u5BF9\u8D26\u5355\u5BC4\u9001\u65B9\u5F0F','messages':null,'mode':'out','name':'c_billsendflag','order':145,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20030','editable':true,'format':null,'id':4527813,'jdbcKeys':null,'label':'\u5BF9\u8D26\u5355\u5BC4\u9001\u9014\u5F84','messages':null,'mode':'out','name':'c_billsendpass','order':150,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20080','editable':true,'format':null,'id':4527814,'jdbcKeys':null,'label':'\u5F00\u901ACallCenter\u6807\u5FD7','messages':null,'mode':'out','name':'c_callcenter','order':155,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':200},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20080','editable':true,'format':null,'id':4527815,'jdbcKeys':null,'label':'\u5F00\u901A\u7F51\u4E0A\u4EA4\u6613\u6807\u5FD7','messages':null,'mode':'out','name':'c_internet','order':160,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':200},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527816,'jdbcKeys':null,'label':'\u56FD\u7C4D','messages':null,'mode':'out','name':'c_nationality','order':165,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527817,'jdbcKeys':null,'label':'\u6CD5\u4EBA\u59D3\u540D','messages':null,'mode':'out','name':'c_lawname','order':170,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20022','editable':true,'format':null,'id':4527818,'jdbcKeys':null,'label':'\u6CD5\u4EBA\u8BC1\u4EF6\u7C7B\u578B','messages':null,'mode':'out','name':'c_lawidtype','order':175,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527819,'jdbcKeys':null,'label':'\u6CD5\u4EBA\u8BC1\u4EF6\u53F7\u7801','messages':null,'mode':'out','name':'c_lawidno','order':180,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':150},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527820,'jdbcKeys':null,'label':'\u7ECF\u7EAA\u4EBA','messages':null,'mode':'out','name':'c_broker','order':185,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'C20031','editable':true,'format':null,'id':4527821,'jdbcKeys':null,'label':'\u63A8\u8350\u4EBA\u7C7B\u578B','messages':null,'mode':'out','name':'c_recommendertype','order':190,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527822,'jdbcKeys':null,'label':'\u63A8\u8350\u4EBA','messages':null,'mode':'out','name':'c_recommender','order':195,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527823,'jdbcKeys':null,'label':'\u57CE\u5E02\u7F16\u53F7','messages':null,'mode':'out','name':'c_cityno','order':200,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527824,'jdbcKeys':null,'label':'\u7279\u6B8A\u4EE3\u7801','messages':null,'mode':'out','name':'c_actcode','order':205,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527825,'jdbcKeys':null,'label':'\u9000\u4FE1\u539F\u56E0','messages':null,'mode':'out','name':'c_backreason','order':210,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':100},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527781,'jdbcKeys':null,'label':'\u57FA\u91D1\u8D26\u6237\u5361\u7684\u51ED\u8BC1\u53F7','messages':null,'mode':'out','name':'c_accountcardid','order':215,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':130},{'category':null,'conditionMap':null,'defaultValue':null,'dictName':'field:institutiondictname:{\"C20053\":\"C20053\",\"C20444\":\"C20444\",\"C20445\":\"C20445\",\"C20446\":\"C20446\"}','editable':true,'format':null,'id':4527826,'jdbcKeys':null,'label':'\u673A\u6784\u7C7B\u578B','messages':null,'mode':'out','name':'c_institutiontype','order':220,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':true,'width':130},{'category':'disabled','conditionMap':null,'defaultValue':null,'dictName':null,'editable':true,'format':null,'id':4527827,'jdbcKeys':null,'label':'\u673A\u6784\u6570\u636E\u5B57\u5178','messages':null,'mode':'out','name':'institutiondictname','order':225,'orderable':true,'rules':null,'searchable':true,'showConfigId':4527780,'type':'string','visible':false,'width':150}];
+
+        /* 3.1、初始化查询列表表头 start */
+        for (var i in outFields) {
+            var columnMeta = outFields[i];
+            //固定的操作列
+            if (columnMeta.name != '#') {
+                var alignType = "left";
+                if (columnMeta.type == "number") {
+                    alignType = "right";
+                }
+
+                var column = {
+                    id: columnMeta.id,
+                    field: columnMeta.name,
+                    width: columnMeta.width,
+                    title: columnMeta.label,
+                    sortable: columnMeta.orderable,
+                    hidden: !columnMeta.visible,
+                    select: columnMeta.visible ? 1 : 0,
+                    align: alignType,
+                    disabled:columnMeta.category=='disabled'?true:false,
+                    formatter: function (value) {
+                        if (value == undefined) {
+                            return "";
+                        }
+                        else {
+                            return '<span title="' + value + '">' + value + '</span>';
+                        }
+
+                    }
+                };
+
+                //左侧的固定数据列
+                if (columnMeta.editable == false) {
+                    leftColumns.push(column);
+                } else {
+                    columns.push(column);
+                    columnFields = columns;
+                }
+            }
+        }
+        leftColumnData.push(leftColumns);
+        columnsData.push(columns);
+        frozenColumnData.push(frozenColumns);
+        /* 3.1、初始化查询列表表头 end */
+
+        /* 3.2、查询结果列表设置 start */
+        var newarrLists = new Array();
+        var oldarrLists = new Array();
+        var outFieldSet = {
+            field:{
+                allCheckType:false //全选默认值
+            },
+            // 设置列字段
+            init:function(){
+                this.setDefaultSum();
+                this.setDefaultData();
+            },
+
+            setAllCheckType:function(){
+                this.field.allCheckType = $(".top_notes").find(".top-check").is(":checked");
+            },
+            //恢复默认时恢复全选按钮
+            showAllCheckType:function(){
+                $(".top_notes").find(".top-check").attr("checked",this.field.allCheckType);
+            },
+            setList:function(columns){
+                var arr;
+                for(var i in columns){
+                    arr = {};
+                    arr["name"] =  columns[i].title;
+                    arr["ischeck"] =  columns[i].select==1;
+                    arr["id"] = columns[i].id;
+                    arr["order"] = columns[i].fieldOrder;
+                    arr["disabled"] = columns[i].disabled;
+                    newarrLists.push(arr);
+                }
+                oldarrLists = $.extend(true, [], newarrLists);
+            },
+            //列表显示
+            showList:function(arr) {
+                var html = "";
+                var htmls = "";
+                for (var n = 0; n < arr.length; n++) {
+                    if(!arr[n].disabled){
+                        if (arr[n].ischeck) {
+                            html += "<li> <input type='checkbox' value='" + arr[n].name + "' checked='true' fieldOrder="
+                                +arr[n].order+" fieldId="+arr[n].id+"><span>" + arr[n].name + "</span></li>";
+                            htmls += " <li class='ui-border'><div class='lits_f1'> <span>" + arr[n].name + "</span></div> <div name='" + arr[n].name + "' class='list-delet ui-close'> <i class='icon iconfont icon-guanbi' ></i></div> </li>";
+                        } else {
+                            html += "<li> <input type='checkbox' value='" + arr[n].name + "' fieldOrder="
+                                +arr[n].order+" fieldId="+arr[n].id+"><span>" + arr[n].name + "</span></li>";
+                        }
+                    }
+                }
+                $(".left-lists").html(html);
+                $(".chosed-lists").html(htmls);
+                $(".left-lists input[type=checkbox]").on("click", function () {
+                    $(".top-check").removeAttr("checked");
+                    if ($(this).is(':checked') == true) {
+                        for (var n in arr) {
+                            if(!arr[n].disabled) {
+                                if (arr[n].name == $(this).val()) {
+                                    arr[n].ischeck = true;
+                                }
+                            }
+                        }
+                    } else {
+                        for (var n in arr) {
+                            if (arr[n].name == $(this).val()) {
+                                arr[n].ischeck = false;
+                            }
+                        }
+                    }
+                    htmls = "";
+                    for (var n in arr) {
+                        if (arr[n].ischeck) {
+                            htmls += " <li class='ui-border'><div> <span>" + arr[n].name + "</span></div> <div name='" + arr[n].name + "' class='list-delet ui-close'> <i class='icon iconfont icon-guanbi' ></i></div> </li>";
+                        }
+                    }
+
+                    $(".chosed-lists").html(htmls);
+                    $(".list-delet").on("click", function () {//点击删除
+                        $(".top-check").removeAttr("checked");
+                        for (var n = 0; n < arr.length; n++) {
+                            if (arr[n].name == $(this).attr("name")) {
+                                arr[n].ischeck = false;
+                            }
+                        }
+                        outFieldSet.showList(arr);
+                    })
+                });
+                //顶部全选
+                $(".top-check").on("click", function () {
+                    if (this.checked) {
+                        for (var n = 0; n < arr.length; n++) {
+                            arr[n].ischeck = true;
+                        }
+                    } else {
+                        for (var n = 0; n < arr.length; n++) {
+                            arr[n].ischeck = false;
+                        }
+                    }
+                    outFieldSet.showList(arr);
+                });
+                $(".list-delet").on("click", function () {//点击删除
+                    $(".top-check").removeAttr("checked");
+                    for (var n = 0; n < arr.length; n++) {
+                        if (arr[n].name == $(this).attr("name")) {
+                            arr[n].ischeck = false;
+                        }
+                    }
+                    outFieldSet.showList(arr);
+                });
+            },
+            showSum:function(data){
+                var html="";
+                var name,label;
+                for(var i in outField) {
+                    name = outField[i].name;
+                    label = outField[i].label;
+                    for (var key in data) {
+                        if (key == name) {
+                            html += '<li><div class="cash-item"><span class="item-label">' + label + '</span><span class="item-con">' + data[key] + '</span></div></li>';
+                        }
+                    }
+                }
+
+                $(".slideList .bd").empty().append('<ul>'+html+'</ul>');
+            },
+            setDefaultSum:function(){
+                // 设置汇总数据默认值
+                var html="";
+                var name,label;
+                for(var i in outField) {
+                    name = outField[i].name;
+                    label = outField[i].label;
+                    for (var key in defaultSum) {
+                        if (key == name) {
+                            html += '<li><div class="cash-item"><span class="item-label">' + label + '</span><span class="item-con">' + defaultSum[key] + '</span></div></li>';
+                        }
+                    }
+                }
+
+                $(".slideList .bd").empty().append('<ul>'+html+'</ul>');
+            },
+            setDefaultData:function(){
+                $(".data-table-loading").show();
+            }
+        };
+        outFieldSet.init();
+
+        // 查询结果列设置
+        $(".js-set-lists").click(function(){
+            newarrLists = new Array();
+            var columns = getNewColumns();
+            outFieldSet.setAllCheckType();
+            outFieldSet.setList(columns);
+            outFieldSet.showList(newarrLists);
+            outFieldSet.index = layer.open({
+                type: 1,
+                skin: 'layui-layer-ta', //样式类名
+                area: ['664px', '480px'], //宽高
+                title: '搜索设置',
+                content: $("#setlist-box")
+            });
+        });
+
+        //查询条件设置页面恢复默认
+        $(".chosed-right a").click(function (e) {
+            e.preventDefault();
+            newarrLists = $.extend(true, [], oldarrLists);
+            outFieldSet.showList(newarrLists);
+            outFieldSet.showAllCheckType();
+        });
+
+        //搜索框输入
+        $(".hs-ui-input.prop1-input").keyup(function () {
+            var newArr = [];
+            var thisvlue=$(this).val().replace(" ","");
+            if(thisvlue!=""){
+                for (var n = 0; n < newarrLists.length; n++) {
+                    if (newarrLists[n].name.indexOf(thisvlue) >= 0) {
+                        newArr.push(newarrLists[n]);
+                    }
+                }
+            }else{
+                newArr = newarrLists;
+            }
+            outFieldSet.showList(newArr);
+        });
+
+        //保存列
+        $("#setOutField-sure").click(function () {
+            var maps = [];
+            var data,_this;
+            $(".left-lists input[type='checkbox']").each(function(){
+                data = {};
+                _this = $(this);
+                data["select"] = _this.is(":checked")==true?1:0;
+                data["id"] = parseInt(_this.attr("fieldId"));
+                data["order"] = parseInt(_this.attr("fieldOrder"));
+                maps.push(data);
+            });
+
+            $.ajaxSetup({contentType: "application/json; charset=utf-8", async: false});
+            var actionUrl = '/bomp/tabusiness/query/batchDoInFiledSetting.do?showConfigPrefix=query_accountInfo';
+            $.post(actionUrl, JSON.stringify(maps), function (response) {
+                if (response.hasOwnProperty("error_info")) {
+                    var message = "处理失败:[" + response.error_info + "]";
+                    layer.msg(message);
+                }else{
+                    setTimeout(function () {
+                        layer.close(outFieldSet.index);
+                        layer.msg("设置成功！", {time: 1000});
+
+                        // 刷新查询结果列表
+                        searchForm.resetList();
+                    });
+                }
+            });
+            $.ajaxSetup({async: true});
+        });
+
+        // 取消
+        $("#setOutField-cancel").click(function () {
+            layer.close(outFieldSet.index);
+        });
+        /* 3.2、查询结果列表设置 end */
+        /* 3、查询结果列表 end */
+
+        /* 4、导出start */
+        // 4.1、导出当前页按钮事件处理
+        var exportForm = {
+            exporttype:"0"
+        };
+
+        // 4.2、导出事件
+        // 导出当前页按钮事件处理
+        $("#export-btn").on("click", function () {
+            exportEvent($(this));
+        });
+
+        // 导出所有页按钮事件处理
+        $("#exportAll-btn").on("click", function () {
+            exportEvent($(this));
+        });
+
+        // 导出弹窗
+        function exportEvent($this) {
+            exportForm.exporttype = $this.attr("exporttype");
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-ta', //样式类名
+                shift: 0,
+                move: false,
+                area: ['50%', '300px'],
+                title: ['选择导出格式', "font-size:15px;color:#000;font-weight:bold"],
+                shadeClose: true, //开启遮罩关闭
+                btnAlign: 'c',
+                content: $(".rate-prop.rate-prop3")
+            });
+        }
+
+        // 导出处理
+        $("#export-sure").on("click",function(){
+            layer.closeAll();
+            var url = '/bomp/common/export/query.htm?showConfigName=query_accountInfoQuery&showConfigPrefix=query_accountInfo&action=export&menuId1=58586&menuId2=58605&menuId3=73826';
+            var params = getQueryFormValue();
+            var newParams = filterParam4Query(params);
+
+            var pager = $('#trade-table').datagrid('options');
+            var sort = pager.sortName == null ? '' : pager.sortName;
+            var order = pager.sortOrder == null ? '' : pager.sortOrder;
+
+            var exportMode = $("#exportMode").find("option:selected").val();
+            var param = 'pagesize=' + pager['pageSize'] + '&pageno=' + pager['pageNumber'] + '&sort=' + sort + '&order=' + order + "&exporttype=" + exportForm.exporttype + "&exportMode=" + exportMode;
+            //存在区间
+            var paramUrl = '';
+            for (var key in params) {
+                var value = params[key];
+                if (value.constructor.name == 'Array') {
+                    for (var i = 0; i < value.length; i++) {
+                        paramUrl += key + '[' + i + ']=' + value[i] + '&';
+                    }
+                } else {
+                    paramUrl += key + '=' + value + '&';
+                }
+            }
+            paramUrl = paramUrl.substring(0, paramUrl.length - 1);
+
+            url = url + '&' + param + '&' + paramUrl;
+            location.href = encodeURI(url);
+        });
+        /* 4、导出end */
+    });
+
+
+    // 获取queryForm值
+    function getQueryFormValue(){
+        return $.extend({}, queryForm.getValues());
+    }
+
+    // 获取用户查询条件字段
+    function getNewInColumns() {
+        var columns = [];
+        var inFields = "";
+        var actionUrl = '/bomp/tabusiness/query/getNewInFields.json?showConfigPrefix=query_accountInfo';
+
+        $.ajaxSetup({contentType: "application/json; charset=utf-8",async: false});
+        $.post(actionUrl, "", function (response) {
+            if (response.hasOwnProperty("error_info")) {
+                message = "处理失败:[" + response.error_info + "]";
+                layer.msg(message);
+            } else {
+                inFields = response;
+            }
+        });
+        $.ajaxSetup({async: true});
+
+        for (var i in inFields) {
+            var columnMeta = inFields[i];
+            var column = {
+                id: columnMeta.id,
+                field: columnMeta.name,
+                title: columnMeta.label,
+                order:columnMeta.order,
+                disabled:columnMeta.category=='disabled'?true:false,
+                hidden:columnMeta.category == 'hidden'? true:false,
+                select: (columnMeta.category != 'hidden' && columnMeta.visible) ? 1 : 0
+            };
+            columns.push(column);
+        }
+        return columns;
+    }
+
+    // 详情弹出框
+    function openDetailWindow(param, action) {
+        var detailUrl = '/bomp/tabusiness/query/detailNew.html?showConfigPrefix=query_accountInfo&menuId1=58586&menuId2=58605&menuId3=73826';
+        var title = '\u8D26\u6237\u4FE1\u606F';
+        var size = Object.getOwnPropertyNames(param).length;
+        var height = (200 + size / 2 * 30) > $(window.top).height() - 180 ? $(window.top).height() - 180 : (200 + size / 2 * 30);
+        layer.open({
+            type: 2,
+            title: title + "详情",
+            area: ['80%',height + 'px'],
+            content: detailUrl + "&" + $.param(param)
+        });
+    }
+
+    // 过滤入参
+    function filterParam4Query(param) {
+        var newParam = $.extend({}, param);
+        $(".icheckbox_search").not('.checked').each(function () {
+            newParam[$("[form-item-id=" + $(this).parent().parent().attr("option-id") + "]").attr("form-item-name")] = '';
+        });
+        return newParam;
+    }
+
+    // 刷新查询条件
+    function reloadTop(){
+        var toIframe=[];
+        for(var i=0;i<JSON.parse(sessionStorage.getItem("arrData")).length;i++){
+            toIframe[i]=JSON.parse(sessionStorage.getItem("arrData"))[i].ischeck;
+        }
+        $(".frm-panel.js-frm-panel").find(".frm-item-panel.clear.fl").each(function(index,e){
+            if(toIframe[index]==true){
+                $(e).css({"display":"block"});
+            }else{
+                $(e).css({"display":"none"});
+            }
+        });
+    };
+
+    // 常用搜索点击触发显隐
+    function rendercommonword(){
+        var wordLi = $(".js-common-word").find("li");
+        if(wordLi.length == 1 && !wordLi.data("id")){
+            // 查询条件隐藏时，值置空 todo
+            $(".type-item-panel").hide();
+        }else{
+            $(".type-item-panel").show();
+        }
+    }
+
+    // 筛选内容点击触发查询条件伸缩
+    function showScreenlists(){
+        var winHeight = $(window).height()/2,
+            $frmPanel = $(".js-frm-panel");
+
+        if($frmPanel.hasClass("showAll")){
+            if($frmPanel.height() > winHeight){
+                $frmPanel.css({
+                    'height':winHeight,
+                    'overflow':'auto'
+                }).find(".js-frm-item-action").addClass("none");
+                $frmPanel.siblings(".js-frm-item-action").removeClass("none");
+            }
+        }else{
+            $frmPanel.css({
+                'height':'auto',
+                'overflow':'inherit'
+            }).find(".js-frm-item-action").removeClass("none");
+            $frmPanel.siblings(".js-frm-item-action").addClass("none");
+        }
+    }
+
+    // url 特殊字符转换
+    function unescapeHTML(a) {
+        a = "" + a;
+        return a.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&ldquo;/g, '“').replace(/&rdquo;/g, '”');
+    }
+
+    /*]]>*/
+</script></body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>产品个户交易限制信息</title>
+    <script type="text/javascript" src="static/static.js"></script>
+</head>
+<body style="background: #fff;">
+<div class="hs-ui-page hs-ui-sub-page">
+    <div class="hs-ui-module mg-t-20 clear">
+        <div class="hs-query-panel">
+            <div class="frm-panel js-frm-panel clear">
+                <div class="frm-item-panel clear fl">
+                    <div class="frm-label fl col-sm-3">客户类型</div>
+                    <div class="frm-content fl col-sm-9">
+                        <div class="frm-input-item"><input type="text" class="hs-ui-input" placeholder="请输入"></div>
+                    </div>
+                </div>
+                <div class="frm-item-panel clear fl">
+                    <div class="frm-label fl col-sm-3">销售商</div>
+                    <div class="frm-content fl col-sm-9">
+                        <div class="frm-input-item"><input type="text" class="hs-ui-input" placeholder="请输入"></div>
+                    </div>
+                </div>
+                <div class="frm-item-panel clear fl" form-item-id="4530340" form-item-name="D_DATE" name="4530340"
+                     style="display: block;">
+                    <div class="frm-label fl col-sm-4">申请日期</div>
+
+                    <div class="frm-content fl col-sm-8">
+                        <div class="frm-input-item">
+                            <div class="time-rank">
+                                    <span ui-type="DateTimeSectionInput" ui-name="D_DATE" ui-value=""
+                                          ui-data="{}" type="text" name="D_DATE" value="">
+    <input type="text" value="" class="hs-ui-input DateTimeInput short valid" name="D_DATE1" aria-invalid="false">
+    <span class="">-</span>
+    <input type="text" value="" class="hs-ui-input DateTimeInput short" name="D_DATE2">
+</span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="frm-item-action clear fr js-frm-item-action">
+                    <a href="javascript:;" class="hs-ui-btn btn-primary js-checked-btn"
+                       style=" margin-left: 30px;">查询</a>
+                    <a href="javascript:;" class="hs-ui-btn">重置</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="hs-ui-middle-content">
+        <div class="hs-ui-middle-title">
+            <div class="hs-title-title-txt clear">
+                <div class="item-sort fl">
+                    <a href="" id="add-btn">新增</a>
+                </div>
+                <div class="item-sort fl ">
+                    <a href="" id="edit-btn">修改</a>
+                </div>
+                <div class="item-sort fl">
+                    <a href="" id="delete-btn" style="color:red;">删除</a>
+                </div>
+                <div class="hs-ui-search dh-search-panel clear fl">
+                    <div class="search-icoBtn"><i class="icon iconfont icon-search"></i></div>
+                    <input type="text" class="hs-ui-input fl" id="datagrid-table-search" placeholder="请输入列表标题名称">
+                    <div class="dh-search-lists">
+                        <ul></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hs-ui-table">
+            <table id="trade-table"></table>
+            <div class="data-table-loading">
+                <div class="no-data-tip">
+                    <div class="no-data-img"></div>
+                    <p class="mg-t-10">哎呦，您还没有相关数据哦！请 <a href="javascript:;" class="ui-textColor">查询></a></p>
+                </div>
+            </div>
+            <div class="pos-mask"></div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+    $(function () {
+        //随屏幕变化，重新计算
+        function resizeGrid() {
+            var grid = $(".datagrid-f");
+            if (grid.length) {
+                grid.datagrid('resize');
+            }
+        }
+
+        var tradeFn = {
+            obj: {
+                $commonWordlist: $(".js-common-word"),
+                $dhSearchPanel: $(".dh-search-panel")
+            },
+            init: function () {
+                this.rendtable();
+                this.event();
+            },
+            rendtable: function () {
+                var that = this;
+                //使用easyui grid控件
+                using('datagrid', function () {
+                        var grid = $('#trade-table').datagrid({
+                            // fit:true,
+                            // toolbar: '#hs-ui-middle-title',
+                            width: 'auto',
+                            height: 'auto',
+                            pagination: true,
+                            loadMsg: "数据处理中...",
+                            striped: true,
+                            nowrap: false,
+                            pageSize: 10,
+                            // url: 'json/datagrid_data.json',//数据源，生产环境请替换
+                            method: 'get',
+                            onLoadSuccess: function (data) {
+                                resizeGrid();
+                                if (!data.rows.length) {
+                                    $(".data-table-loading").show();
+                                } else {
+                                    $(".data-table-loading").hide();
+                                }
+                            },
+                            onLoadError: function () {
+                                layer.msg('请求失败，请重试', {time: 1000});
+                            },
+                            columns: [[
+                                {field: 'fundnumber', title: '基金账号', width: 100},
+                                {field: 'tradenumber', title: '交易账号', width: 100},
+                                {field: 'custname', title: '客户名称', width: 100},
+                                {field: 'type', title: '业务类型', width: 100},
+                                {field: 'time', title: '确认日期', width: 100},
+                                {field: 'time', title: '确认日期', width: 100},
+                                {field: 'time', title: '确认日期', width: 100},
+                                {field: 'time', title: '确认日期', width: 100},
+                                {field: 'time', title: '确认日期', width: 100},
+                                {field: 'time', title: '确认日期', width: 100},
+                                {field: 'time', title: '确认日期', width: 100},
+                                {field: 'status', title: '处理状态'},
+                                {field: 'cardnumber', title: '基金账户卡的凭证号'}
+                            ]],
+                            frozenColumns: [[]],
+                            frozenColumnsLeft: [[
+                                {field: 'ck', checkbox: true, width: 100},
+                                {field: 'code', title: 'TA代码', width: 100},
+                            ]]
+                        });
+
+                        var pager = grid.datagrid('getPager');
+                        pager.pagination({
+                            layout: ['first', 'prev', 'manual', 'next', 'last', 'list'],
+                            beforePageText: '第',
+                            afterPageText: '页 共 {pages} 页',
+                            displayMsg: '共{total}条数据'
+                        });
+
+                        $(window).resize(function () {
+                            grid.datagrid('resize');
+                        });
+
+                        window.grid = grid;
+                        //列名筛选 添加遮罩层
+                        var tableArr = [], selectedDhList = [];
+
+                        function setDhlists() {
+                            $(".datagrid-header-row td").each(function () {
+                                tableArr.push({name: $(this).text(), field: $(this).attr("field")})
+                            })
+                        }
+
+                        setDhlists();
+                        $('#datagrid-table-search').keyup(function (e) {
+                            var inputVal = $(this).val(), lihtml = "";
+                            if (inputVal) {
+                                $.each(tableArr, function (i, v) {
+                                    if (v.name.indexOf(inputVal) >= 0) {
+                                        selectedDhList.push({index: i, name: v.name});
+                                        lihtml += '<li data-index="' + i + '" data-field="' + v.field + '">' + v.name + '</li>';
+                                    }
+                                })
+                                if (!selectedDhList.length) lihtml = '<li data-index="-1">没有相关列表</li>';
+                                $(".dh-search-lists").show().find("ul").empty().append(lihtml);
+                            } else {
+                                selectedDhList = [];
+                                $(".dh-search-lists").hide().find("ul").empty();
+                                $(".pos-mask").hide()
+                            }
+
+                        });
+
+                    }
+                );
+            },
+            posMask: function (itemfield) {
+                var tdItem = $(".datagrid-view .datagrid-header-row td[field='" + itemfield + "']"),
+                    tdItemLeft = tdItem.offset().left,
+                    tdItemWidth = tdItem.width(),
+                    tableWidth = $(".hs-ui-table").width(),
+                    scrollLeft = tdItemLeft + tdItemWidth - tableWidth > 0 ? tdItemLeft + tdItemWidth - tableWidth : 0;
+                maskLeft = tdItemLeft;
+
+                $(".datagrid-view2 .datagrid-body").scrollLeft(scrollLeft);
+                $(".pos-mask").show().css({
+                    left: tdItemLeft - 10,
+                    width: tdItemWidth
+                })
+            },
+            event: function () {
+                var _this = this;
+                $(document).click(function () {
+                    _this.obj.$dhSearchPanel.find(".dh-search-lists").hide();
+                })
+                _this.obj.$dhSearchPanel.on("click", ".dh-search-lists li", function () {
+                    var field = $(this).data("field");
+                    _this.posMask(field);
+                })
+            }
+        }
+        tradeFn.init();
+    })
+</script>
+</html>

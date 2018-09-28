@@ -1,0 +1,12 @@
+.item-sort {
+    height: 32px;
+    padding: 0 6px;
+    text-align: center;
+    line-height: 32px;
+    margin-right: 6px;
+    background: #F4F4F4;
+}
+
+.item-sort i {
+    float: left;
+}

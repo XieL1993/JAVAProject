@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>待办事项</title>
+    <!--&lt;!&ndash; 引入jQuery 核心库&ndash;&gt;-->
+    <!--<script type="text/javascript" src="./resources/jquery-easyui/1_4_3/jquery.min.js"></script>-->
+    <!--&lt;!&ndash; 引入easyLoader.js &ndash;&gt;-->
+    <!--<script type="text/javascript" src="./resources/jquery-easyui/1_4_3/easyloader.js"></script>-->
+    <script type="text/javascript" src="static/static.js"></script>
+</head>
+<body>
+<div class="hs-ui-backlog-content">
+    <div class="bg-white hs-ui-table">
+        <table id="result-grid1"></table>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+  $(function() {
+    //创建表格
+    function rendtable() {
+      var that = this;
+      //使用easyui grid控件
+      using('datagrid', function() {
+        var grid = $('#result-grid1').datagrid({
+          width: 'auto',
+          height: 'auto',
+          pagination: true,
+          loadMsg: "数据处理中...",
+          striped: true,
+          nowrap: false,
+          pageSize: 10,
+          url: 'json/backlog.json',//数据源，生产环境请替换
+          method: 'get',
+          onLoadSuccess: function(data) {
+            resizeGrid();
+          },
+          onLoadError: function() {
+            // layer.msg('请求失败，请重试', { time: 1000 });
+          },
+          columns: [[
+            { field: 'fundthing', title: '' },
+            { field: 'fundtime', title: '', width: 81 }
+          ]]
+        });
+
+        var pager = grid.datagrid('getPager');
+        pager.pagination({
+          layout: ['first', 'prev', 'manual', 'next', 'last', 'list'],
+          beforePageText: '第',
+          afterPageText: '页 共 {pages} 页',
+          displayMsg: '每页记录数'
+        });
+
+        $(window).resize(function() {
+          grid.datagrid('resize');
+        });
+
+        window.grid = grid;
+
+      });
+    }
+    //随屏幕变化，重新计算
+    function resizeGrid() {
+      var grid = $(".datagrid-f");
+      if (grid.length) {
+        grid.datagrid('resize');
+      }
+    }
+
+    rendtable();
+  })
+</script>
+</html>

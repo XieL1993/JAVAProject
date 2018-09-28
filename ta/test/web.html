@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="static/static.js"></script>
+    <style type="text/css">
+        .form{
+            width: 300px;
+            height: 300px;
+            background: #00E8D7;
+            margin: 100px;
+        }
+    </style>
+</head>
+<body>
+<form class="form" id="queryForm">
+    <div><input type="text"></div>
+</form>
+<script type="text/javascript">
+    // 全局变量定义
+    var contextPath;
+    var options;
+    //
+    var $queryForm;
+    var queryForm;
+$(function () {
+    // 全局变量定义
+    contextPath = '/bomp/';
+    options = {contextPath: contextPath};
+    //
+    $queryForm = $("#queryForm");
+    queryForm = $queryForm.webForm(options);
+})
+</script>
+
+</body>
+</html>

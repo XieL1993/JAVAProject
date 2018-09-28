@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入jQuery 核心库-->
+    <script type="text/javascript" src="./resources/jquery-easyui/1_4_3/jquery.min.js"></script>
+    <!-- 引入easyLoader.js -->
+    <script type="text/javascript" src="./resources/jquery-easyui/1_4_3/easyloader.js"></script>
+
+</head>
+<body>
+<div class="easyui-dialog" id="d1" title="EasyUI Dialog" style="width: 500px;height: 300px;">1、Hello !纯html创建的！</div>
+
+<div id="d2">2、使用自定义参数创建EasyUI的dialog</div>
+
+<a id="btnAlert" class="easyui-linkbutton">弹出框提示</a>
+<script type="text/javascript">
+  $(function() {
+    //使用easyloader加载dialog模块使用到的js和css样式
+    easyloader.load('dialog', function() {
+      $('#d2').dialog({
+        title: '使用JavaScript创建的自定义参数Dialog',
+        width: 400,
+        height: 200,
+        closed: false,
+        cache: false,
+        modal: true
+      });
+    });
+    easyloader.locale = "zh_CN";
+
+    /*easyloader.load还有一个别名叫using，定义在window对象上*/
+    //使用easyloader加载messager模块使用到的js和css样式
+    using("messager", function() {
+      alert("加载成功！");
+      $("#btnAlert").click(function() {
+        $.messager.alert('Warning', 'The warning message');
+      });
+    });
+
+  });
+</script>
+</body>
+</html>
