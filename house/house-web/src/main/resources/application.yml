@@ -62,4 +62,8 @@ logging:
 file:
   path: D:\house
   prefix: http://192.168.242.80:70/images
+management:
+  server:
+    port: 9001
+
 

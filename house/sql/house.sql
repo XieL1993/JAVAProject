@@ -258,4 +258,31 @@ VALUES
 UNLOCK TABLES;
 
 # ------------------------------------------------------------
+DROP TABLE IF EXISTS `community`;
+
+CREATE TABLE `community` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `city_code` varchar(11) NOT NULL DEFAULT '' COMMENT '城市编码',
+  `name` varchar(50) NOT NULL DEFAULT '' COMMENT '小区名称',
+  `city_name` varchar(11) NOT NULL DEFAULT '' COMMENT '城市名称',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `community` WRITE;
+/*!40000 ALTER TABLE `community` DISABLE KEYS */;
+
+INSERT INTO `community` (`id`, `city_code`, `name`, `city_name`)
+VALUES
+	(1,'110000','西山华府','北京市'),
+	(2,'110000','万柳书苑','北京市'),
+	(3,'110000','太阳公元','北京市'),
+	(4,'110000','橡树湾','北京市'),
+	(5,'110000','阳光丽景','北京市'),
+	(6,'110000','紫苑华府','北京市'),
+	(7,'110000','北街嘉园','北京市');
+
+/*!40000 ALTER TABLE `community` ENABLE KEYS */;
+UNLOCK TABLES;
+
+# ------------------------------------------------------------
 

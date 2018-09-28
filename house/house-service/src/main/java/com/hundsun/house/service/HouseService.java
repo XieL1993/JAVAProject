@@ -1,6 +1,8 @@
 package com.hundsun.house.service;
 
+import com.hundsun.house.bean.Community;
 import com.hundsun.house.bean.HouseUser;
+import com.hundsun.house.bean.User;
 import com.hundsun.house.bean.UserMsg;
 import com.hundsun.house.bean.page.PageData;
 import com.hundsun.house.bean.page.PageParams;
@@ -18,4 +20,10 @@ public interface HouseService {
     HouseUser getHouseUser(Long houseId);
 
     void addUserMsg(UserMsg userMsg);
+
+    List<Community> getAllCommunitys();
+
+    void addHouse(HouseVo house, User user);
+
+    void bindUser2House(Long houseId, Long userId, boolean collect);
 }

@@ -35,6 +35,10 @@
             <!-- optional=true,依赖不会传递，该项目依赖devtools,
             之后依赖该项目的项目如果想要使用devtools，需要重新引入 -->
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -48,6 +52,7 @@
                     <fork>true</fork>
                     <!-- 指定该Main Class为全局的唯一入口 -->
                     <mainClass>com.hundsun.house.HouseApplication</mainClass>
+                    <layout>zip</layout>
                 </configuration>
                 <executions>
                     <execution>

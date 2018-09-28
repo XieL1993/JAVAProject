@@ -1,0 +1,14 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: user
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8666/eureka/
+  instance:
+#     续约更新时间间隔（默认30秒）
+    lease-renewal-interval-in-seconds: 5
+#    续约到期时间（默认90秒）
+    lease-expiration-duration-in-seconds: 10
